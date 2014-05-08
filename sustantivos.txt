@@ -1,0 +1,20 @@
+juego
+puntos
+jugador
+adversarios
+arma
+pista
+punto inicial
+vehiculo
+velocidad
+boton de disparo
+interseccion
+bifurcacion
+letrero
+camino
+ruta
+color
+resultado
+carriles
+enemigos
+disparo
