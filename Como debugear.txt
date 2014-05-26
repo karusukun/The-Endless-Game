@@ -1,0 +1,2 @@
+a la hora de probarlo distribuir en un .apk de android escribir lo siguiente en el CMD:
+gradlew.bat android:assembleDebug
