@@ -1,11 +1,10 @@
 android {
-    buildToolsVersion "19.0.3"
+    buildToolsVersion "19.1.0"
     compileSdkVersion 19
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
             java.srcDirs = ['src']
-            resources.srcDirs = ['src']
             aidl.srcDirs = ['src']
             renderscript.srcDirs = ['src']
             res.srcDirs = ['res']
@@ -47,7 +46,7 @@ task copyAndroidNatives() {
 
 task run(type: Exec) {
     def adb = "$System.env.ANDROID_HOME/platform-tools/adb"
-    commandLine "$adb", 'shell', 'am', 'start', '-n', 'com.mygdx.EndlessGame.android/com.mygdx.EndlessGame.android.AndroidLauncher'
+    commandLine "$adb", 'shell', 'am', 'start', '-n', 'com.gdx.EndlessGame.android/com.gdx.EndlessGame.android.AndroidLauncher'
 }
 
 // sets up the Android Eclipse project, using the old Ant based build.
