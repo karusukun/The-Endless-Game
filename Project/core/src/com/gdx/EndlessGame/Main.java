@@ -13,25 +13,32 @@ import com.badlogic.gdx.graphics.g2d.*;
 
 public class Main extends Game {
 	public SpriteBatch batch;
+        public OrthographicCamera camera;
         private int _gameHeight;
         private int _gameWidth;
         public static AssetManager MANAGER;
         
         //Declaracion de las diferentes screens
-        public Pantalla _loadingScreen, _menuScreen;
+        public Pantalla _loadingScreen, _menuScreen, _gameplayScreen;
         
 	
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		_gameHeight = Gdx.graphics.getHeight();
+                _gameHeight = Gdx.graphics.getHeight();
                 _gameWidth = Gdx.graphics.getWidth();
+                camera = new OrthographicCamera(_gameWidth, _gameHeight);
+                camera.translate(_gameWidth /2, _gameHeight/2);
+                camera.update();
+                
+                
                 MANAGER = new AssetManager();                   
                 LoadAssets();
                 
                 //Creacion de las pantallas
                 _loadingScreen = new LoadingScreen(this);
                 _menuScreen = new MenuScreen(this);
+                _gameplayScreen = new GameplayScreen(this);
                 //Setting first screen
                 setScreen(_loadingScreen);
                 
@@ -55,22 +62,21 @@ public class Main extends Game {
         
         MANAGER.dispose();
         batch.dispose();
-        this.dispose();
-    }
-    
-    
+    }    
 
 public void LoadAssets()
 {
+    //loading basic assets.
+    
     MANAGER.load("loading.png", Texture.class);
     MANAGER.load("playerShip2_blue.png", Texture.class);
     MANAGER.load("ufoBlue.png", Texture.class);
     MANAGER.load("ufoGreen.png", Texture.class);
     MANAGER.load("ufoYellow.png", Texture.class);
+    MANAGER.load("btnShooting.png", Texture.class);
     
     //loading misc
     MANAGER.load("Meteors/meteorBrown_big1.png", Texture.class);
-    MANAGER.load("Meteors/meteorBrown_big2.png", Texture.class);
     MANAGER.load("Meteors/meteorBrown_big3.png", Texture.class);
     MANAGER.load("Meteors/meteorBrown_big4.png", Texture.class);
     MANAGER.load("Meteors/meteorBrown_med1.png", Texture.class);

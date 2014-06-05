@@ -22,7 +22,7 @@ public class MenuScreen extends Pantalla {
     @Override
     public void show() {
         
-        
+         _game.setScreen(_game._gameplayScreen);
     }
 
     @Override
@@ -62,6 +62,7 @@ public class MenuScreen extends Pantalla {
         
         _game.batch.end();
         
+       
     }
     
     

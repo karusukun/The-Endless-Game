@@ -7,6 +7,7 @@
 package Libraries;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 /**
@@ -17,16 +18,16 @@ public abstract class GameElement extends Actor{
 
     
     
-    public Sprite getSprite() {
-        return _sprite;
+    public TextureRegion getSprite() {
+        return _region;
     }
 
     public ElementType getType() {
         return _type;
     }
 
-    public void setSprite(Sprite _sprite) {
-        this._sprite = _sprite;
+    public void setSprite(TextureRegion _textRegion) {
+        this._region = _textRegion;
     }
 
     public void setType(ElementType _type) {
@@ -35,7 +36,7 @@ public abstract class GameElement extends Actor{
     
     
     
-    protected Sprite _sprite;
+    protected TextureRegion _region;
     protected ElementType _type;
     
 }

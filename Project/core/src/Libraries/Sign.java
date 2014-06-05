@@ -9,6 +9,7 @@ package Libraries;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 /**
  *
@@ -19,12 +20,12 @@ public class Sign extends GameElement{
     private Color _color;
     private Texture _publicity;
     
-    public Sign(Color pColor,Texture pPublicity, Sprite pSprite)
+    public Sign(Color pColor,Texture pPublicity, TextureRegion pSprite)
     {
         
         this._color = pColor;
         this._publicity = pPublicity;
-        this._sprite = pSprite;
+        this._region = pSprite;
         this._type = ElementType.SIGN;
        
     }
