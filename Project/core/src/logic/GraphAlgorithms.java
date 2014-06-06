@@ -4,7 +4,9 @@
  * and open the template in the editor.
  */
 
-package grafo;
+package logic;
+
+import Libraries.Node;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -16,11 +18,12 @@ import java.util.Random;
 
 public class GraphAlgorithms {
     private static GraphAlgorithms instance = null;
-    private HashTable _nodosHash;
+    //private HashTable _nodosHash;
     private ArrayList<Node> _VisitedList; // Dejaremos el tamano maximo en 30
     
     protected GraphAlgorithms(){
-        _nodosHash = new HashTable();
+        //_nodosHash = new HashTable();
+        _VisitedList = new ArrayList<Node>();
     }
     
     public static GraphAlgorithms getInstance(){
