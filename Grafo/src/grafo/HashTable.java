@@ -22,7 +22,7 @@ public class HashTable {
         }
     }
     
-    
+    /*
     public void addItem(Node pNode){
         int index = hash(pNode.getLevel());
         
@@ -37,7 +37,7 @@ public class HashTable {
             ptr.setNext(pNode);
         }
     }
-    
+    */
     
     public int hash(int key){
         return key % 4;

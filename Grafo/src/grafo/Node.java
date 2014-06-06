@@ -20,7 +20,7 @@ public class Node {
     //private int _meter;
     private int _level;
     private ArrayList<Node> _NodesList;
-    private Node _next; //For the hashTable
+    //private Node _next; //For the hashTable
     
     public Node(double pSeed, int pLevel){
         this._visited = false;
@@ -28,7 +28,7 @@ public class Node {
         //this._meter = pMeter;
         this._level = pLevel;
         this._NodesList = new ArrayList<Node>();
-        this._next = null;
+        //this._next = null;
     }
     
     
@@ -65,14 +65,14 @@ public class Node {
         this._NodesList = _NodesList;
     }
 
-    public Node getNext() {
+    /*public Node getNext() {
         return _next;
     }
 
     public void setNext(Node _next) {
         this._next = _next;
     }
-    
+    */
     
     
     
