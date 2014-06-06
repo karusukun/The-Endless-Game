@@ -36,7 +36,7 @@ public class Intersection extends Actor {
     public void act(float delta) {
         
         float newPos = getY() - 120 * delta;
-        if(newPos < 480 - getHeight())
+        if(newPos < GameplayScreen.getScene().getHeight() - getHeight())
         {
             setY(getY());
             _bBox.x = getX();

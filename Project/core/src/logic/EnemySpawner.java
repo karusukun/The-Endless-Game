@@ -60,7 +60,6 @@ public class EnemySpawner
             _remainingSpawns -=1;
         }
     }
-
     public float getTimingSpawning() {
         return _timingSpawning;
     }
