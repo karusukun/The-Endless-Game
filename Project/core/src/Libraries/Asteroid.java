@@ -34,11 +34,12 @@ public class Asteroid extends GameElement{
     @Override
     public void act(float delta) {
            
-        float newPos = getY() - 60 * delta;
+        float newPos = getY() - 70 * delta;
         if(newPos < 0)
             this.remove();
-        toBack();
         setY(newPos);
+        toBack();
+        
         rotateBy(0.5f);
        
     }

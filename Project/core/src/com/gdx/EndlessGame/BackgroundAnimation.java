@@ -34,7 +34,7 @@ public class BackgroundAnimation  extends Actor {
          _frames[1] = new TextureRegion(Main.MANAGER.get("Backgrounds/blue.png",Texture.class),0,0,800,480);
          //_frames[2] = new TextureRegion(Main.MANAGER.get("Backgrounds/darkPurple.png",Texture.class),0,0,800,480);
              
-         _background = new Animation(0.50f,_frames);
+         _background = new Animation(0.70f,_frames);
          
      }
 

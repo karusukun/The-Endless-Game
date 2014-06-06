@@ -26,6 +26,7 @@ import com.gdx.EndlessGame.InputHandler.ShipKeyboardInput;
 import com.gdx.EndlessGame.InputHandler.ShipTouchInput;
 import com.gdx.EndlessGame.UIElements.ShootingPad;
 import logic.AsteroidSpawner;
+import logic.EnemySpawner;
 import logic.VirtualControler;
 
 /**
@@ -47,7 +48,8 @@ public class GameplayScreen extends Pantalla{
     private float duracion;
     private static ShootingPad _fireButton;
     private AsteroidSpawner _asteroidSpawn;
-            
+    private EnemySpawner _enemySpawner;
+    
     public GameplayScreen(Main pGame) {
         super(pGame);
     }
@@ -68,6 +70,7 @@ public class GameplayScreen extends Pantalla{
         _background.setPosition(0, _stage.getHeight());
     
         _asteroidSpawn = new AsteroidSpawner(_stage);
+        _enemySpawner = new EnemySpawner(_stage);
         
         _gamePlayMusic = Gdx.audio.newMusic(Gdx.files.internal("Music/GameplayM.mp3"));
         _gamePlayMusic.setLooping(true);
@@ -96,22 +99,32 @@ public class GameplayScreen extends Pantalla{
     @Override
     public void render(float f) {
         
+        //setear valores importantes
         duracion += f;
         _asteroidSpawn.setContadorSpawning(_asteroidSpawn.getContadorSpawning()+ f);
+        _enemySpawner.setTimingSpawning(_enemySpawner.getTimingSpawning() + f);
+        
         Gdx.gl.glClear( GL20.GL_COLOR_BUFFER_BIT );
         Gdx.gl20.glClearColor(1f, 1f, 1f, 0.5f);
         
+        //dibujar background
         TextureRegion frame = _background._background.getKeyFrame(duracion, true);
         _game.batch.begin();
         _game.batch.draw(frame, 0, 0);
         _game.batch.end();
     
-        if(_asteroidSpawn.getContadorSpawning() > 4f)
+        
+        if(_asteroidSpawn.getContadorSpawning() > 1.5f)
         {
             _asteroidSpawn.SpawnAsteroid();
             _asteroidSpawn.setContadorSpawning(0);
         }
         
+        if(_enemySpawner.getTimingSpawning() > 2f)
+        {
+            _enemySpawner.SpawnEnemy();
+            _enemySpawner.setTimingSpawning(0);
+        }
         _stage.act(Gdx.graphics.getDeltaTime());
         _stage.draw();
         ProcesarEntrada();
