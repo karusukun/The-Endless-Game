@@ -10,6 +10,7 @@ import Libraries.Asteroid;
 import Libraries.Intersection;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.gdx.EndlessGame.GameplayScreen;
@@ -26,9 +27,12 @@ public class IntersectionSpawner {
     private Stage _scene;
     private float _spawningTime;
     private int _intersecNumber;
+    private Array<Intersection> _intersections;
     
-    public IntersectionSpawner(Stage pScene, int pIntersecNumber)
+    public IntersectionSpawner(Stage pScene, int pIntersecNumber, Array<Intersection> pIntersections)
     {
+       _intersections = pIntersections;
+        
        _IntersecImgs = new Array<Texture>();
        _spawningTime = 0;
        _intersecNumber = pIntersecNumber; 
@@ -47,26 +51,51 @@ public class IntersectionSpawner {
         int interWidth = (GameplayScreen.getScene().getViewport().getViewportWidth()/_intersecNumber) - offset;
         int interX = GameplayScreen.getScene().getViewport().getViewportWidth() - interWidth*_intersecNumber - (offset*_intersecNumber);
         int actualX = interX;
+        Intersection tempActor;
         switch(_intersecNumber)
         {
             
             case 1:
                 
-               _scene.addActor(new Intersection(_IntersecImgs.get(0), actualX+(offset*_intersecNumber)/2, interWidth));
+               tempActor = new Intersection(_IntersecImgs.get(0), actualX+(offset*_intersecNumber)/2, interWidth);
+               _scene.addActor(tempActor);
+               _intersections.add(tempActor);
+               tempActor.getbBox().x = tempActor.getX();
+               tempActor.getbBox().y = tempActor.getY();
                break;
                 
             case 2:
-                _scene.addActor(new Intersection(_IntersecImgs.get(0), actualX+(offset*_intersecNumber)/2, interWidth));
+                tempActor = new Intersection(_IntersecImgs.get(0), actualX+(offset*_intersecNumber)/2, interWidth);
+                _scene.addActor(tempActor);
+                _intersections.add(tempActor);
+                tempActor.getbBox().x = tempActor.getX();
+                tempActor.getbBox().y = tempActor.getY();
                 actualX +=  interX + interWidth; 
-                _scene.addActor(new Intersection(_IntersecImgs.get(1), actualX+(offset*_intersecNumber)/2, interWidth));
+                tempActor = new Intersection(_IntersecImgs.get(1), actualX+(offset*_intersecNumber)/2, interWidth);
+                _scene.addActor(tempActor);
+                _intersections.add(tempActor);
+                tempActor.getbBox().x = tempActor.getX();
+                tempActor.getbBox().y = tempActor.getY();
                 
                 break;
             case 3:
-                _scene.addActor(new Intersection(_IntersecImgs.get(0), actualX+(offset*_intersecNumber)/2, interWidth));
+                tempActor = new Intersection(_IntersecImgs.get(0), actualX+(offset*_intersecNumber)/2, interWidth);
+                _scene.addActor(tempActor);
+                _intersections.add(tempActor);
+                tempActor.getbBox().x = tempActor.getX();
+                tempActor.getbBox().y = tempActor.getY();
                 actualX +=  interX + interWidth; 
-                _scene.addActor(new Intersection(_IntersecImgs.get(1), actualX+(offset*_intersecNumber)/2, interWidth));
+                tempActor = new Intersection(_IntersecImgs.get(1), actualX+(offset*_intersecNumber)/2, interWidth);
+                _scene.addActor(tempActor);
+                _intersections.add(tempActor);
+                tempActor.getbBox().x = tempActor.getX();
+                tempActor.getbBox().y = tempActor.getY();
                 actualX +=  interX + interWidth; 
-                _scene.addActor(new Intersection(_IntersecImgs.get(2), actualX+(offset*_intersecNumber)/2, interWidth));
+                tempActor = new Intersection(_IntersecImgs.get(2), actualX+(offset*_intersecNumber)/2, interWidth);
+                _scene.addActor(tempActor);
+                _intersections.add(tempActor);
+                tempActor.getbBox().x = tempActor.getX();
+                tempActor.getbBox().y = tempActor.getY();
                 break;
         }
     }

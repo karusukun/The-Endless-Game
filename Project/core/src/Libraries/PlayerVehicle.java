@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
@@ -27,17 +28,20 @@ import com.gdx.EndlessGame.Main;
 public class PlayerVehicle extends Vehicle 
 {
     private boolean _touched;
+    private Rectangle _bBox;
     
     public PlayerVehicle()
     {
        _touched = false; 
        this._type = ElementType.PLAYER_VEHICLE;
        this._region = new TextureRegion( Main.MANAGER.get("playerShip2_blue.png", Texture.class), 112,75);
-       setPosition(GameplayScreen.getScene().getWidth()/2 , 50);
-       setSize(80, 54);
+       setPosition(380 , 50);
+       setSize(50, 50);
        setBounds(0, 0, getWidth(), getHeight());
        setTouchable(Touchable.enabled);
     
+       _bBox = new Rectangle(getX(), getY(), getWidth(), getHeight());
+       
          addListener(new InputListener() {
             
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) 
@@ -54,6 +58,14 @@ public class PlayerVehicle extends Vehicle
          });
        
     }
+
+    @Override
+    public void act(float delta) 
+    {
+        
+    }
+    
+    
 
     @Override
     public Actor hit(float x, float y, boolean touchable) {
@@ -80,9 +92,19 @@ public class PlayerVehicle extends Vehicle
         if( newPos + getHeight() >= GameplayScreen.getScene().getHeight())
         {
             setY(getY());
+            _bBox.x = getX();
+            _bBox.y = getY();
+            _bBox.height = getHeight();
+            _bBox.width = getWidth();
         }
-        else
+        else{
             setY(newPos);
+            _bBox.x = getX();
+            _bBox.y = getY();
+            _bBox.height = getHeight();
+            _bBox.width = getWidth();
+        }
+            
     }
     
     public void MoveDown()
@@ -92,9 +114,19 @@ public class PlayerVehicle extends Vehicle
         if( newPos <= 0 )
         {
             setY(getY());
+            _bBox.x = getX();
+            _bBox.y = getY();
+            _bBox.height = getHeight();
+            _bBox.width = getWidth();
         }
         else
-            setY(newPos);        
+        {
+            setY(newPos);
+            _bBox.x = getX();
+            _bBox.y = getY();
+            _bBox.height = getHeight();
+            _bBox.width = getWidth();
+        }
     }
     
     public void MoveLeft()
@@ -104,9 +136,19 @@ public class PlayerVehicle extends Vehicle
         if( newPos <= 0 )
         {
             setX(getX());
+            _bBox.x = getX();
+            _bBox.y = getY();
+            _bBox.height = getHeight();
+            _bBox.width = getWidth();
         }
         else
-            setX(newPos);  
+        {
+            setX(newPos);
+            _bBox.x = getX();
+            _bBox.y = getY();
+            _bBox.height = getHeight();
+            _bBox.width = getWidth();
+        }
     }
     
     public void MoveRight()
@@ -116,9 +158,19 @@ public class PlayerVehicle extends Vehicle
         if( newPos + getWidth() >= GameplayScreen.getScene().getWidth() )
         {
             setX(getX());
+            _bBox.x = getX();
+            _bBox.y = getY();
+            _bBox.height = getHeight();
+            _bBox.width = getWidth();
         }
         else
-            setX(newPos);  
+        {
+            setX(newPos);
+            _bBox.x = getX();
+            _bBox.y = getY();
+            _bBox.height = getHeight();
+            _bBox.width = getWidth();
+        }
     }
 
     public boolean isTouched() {
@@ -128,6 +180,12 @@ public class PlayerVehicle extends Vehicle
     public void setTouched(boolean _touched) {
         this._touched = _touched;
     }
+
+    public Rectangle getbBox() {
+        return _bBox;
+    }
+    
+    
     
     
 

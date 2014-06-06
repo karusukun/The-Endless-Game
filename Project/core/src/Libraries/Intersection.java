@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.gdx.EndlessGame.GameplayScreen;
 
@@ -20,6 +21,7 @@ import com.gdx.EndlessGame.GameplayScreen;
 public class Intersection extends Actor {
     
      private TextureRegion _region;
+     private Rectangle _bBox;
     
     public Intersection(Texture pImage, int x, int Width) {
         
@@ -27,6 +29,7 @@ public class Intersection extends Actor {
         setBounds(0, 0, getWidth(), Width);
         setSize(Width, pImage.getHeight());
         setPosition(x, GameplayScreen.getScene().getHeight());
+        _bBox = new Rectangle(getX(), getY(), Width, getHeight());
     }
 
     @Override
@@ -34,9 +37,21 @@ public class Intersection extends Actor {
         
         float newPos = getY() - 120 * delta;
         if(newPos < 480 - getHeight())
+        {
             setY(getY());
+            _bBox.x = getX();
+            _bBox.y = getY();
+            _bBox.height = getHeight();
+            _bBox.width = getWidth();
+        }    
         else
+        {
             setY(newPos);
+            _bBox.x = getX();
+            _bBox.y = getY();
+            _bBox.height = getHeight();
+            _bBox.width = getWidth();
+        }
         toBack();
         
        
@@ -56,6 +71,10 @@ public class Intersection extends Actor {
                 getOriginY(),getWidth(),getHeight(),
                 getScaleX(),getScaleY(),getRotation());
                
+    }
+
+    public Rectangle getbBox() {
+        return _bBox;
     }
     
     

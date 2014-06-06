@@ -6,8 +6,7 @@
 
 package com.gdx.EndlessGame;
 
-import Libraries.Asteroid;
-import Libraries.PlayerVehicle;
+import Libraries.*;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
@@ -21,15 +20,12 @@ import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.gdx.EndlessGame.InputHandler.ShipKeyboardInput;
-import com.gdx.EndlessGame.InputHandler.ShipTouchInput;
-import com.gdx.EndlessGame.UIElements.BackgroundAnimation;
-import com.gdx.EndlessGame.UIElements.ShootingPad;
-import logic.AsteroidSpawner;
-import logic.EnemySpawner;
-import logic.IntersectionSpawner;
-import logic.VirtualControler;
+import com.gdx.EndlessGame.InputHandler.*;
+import com.gdx.EndlessGame.UIElements.*;
+import com.gdx.EndlessGame.*;
+import logic.*;
 
 /**
  *
@@ -37,7 +33,7 @@ import logic.VirtualControler;
  */
 public class GameplayScreen extends Pantalla{
 
-    
+    private Player _user;
     private static Stage _stage;
     private static PlayerVehicle _player;
     private VirtualControler _controler;
@@ -46,6 +42,8 @@ public class GameplayScreen extends Pantalla{
     private boolean spawnAsteroids = true;
     private boolean spawnEnemies = true;
     private boolean spawnInter = true;
+    private boolean gameOver = false;
+    private boolean nextStage = false;
     
     //Asserts
     private BackgroundAnimation _background;
@@ -56,13 +54,23 @@ public class GameplayScreen extends Pantalla{
     private EnemySpawner _enemySpawner;
     private IntersectionSpawner _interSpawner;
     
-    public GameplayScreen(Main pGame) {
+    //Elements of the game management
+    private  Array<EnemyVehicle> _enemies;
+    private  Array<Intersection> _intersections;
+    private Array<Bullet> _bullets;
+    private Graph _graph;
+    
+    public GameplayScreen(Main pGame, Player pPlayer, Graph pGraph) {
         super(pGame);
         //Seteando el stage
         duracion = 0;
         
         _stage = new Stage();
         _stage.getViewport().setCamera(_game.camera);
+        _graph = pGraph;
+        _user = pPlayer;
+        
+        
     }
 
     @Override
@@ -70,6 +78,10 @@ public class GameplayScreen extends Pantalla{
         
         //Seteando el jugador
         _player = new PlayerVehicle();
+        //setting Game managements
+        _enemies = new Array<EnemyVehicle>();
+        _bullets = new Array<Bullet>();
+        _intersections = new Array<Intersection>();
         
         //Seteando los actores y los assets
         _fireButton = new ShootingPad();
@@ -77,14 +89,16 @@ public class GameplayScreen extends Pantalla{
         _background.setPosition(0, _stage.getHeight());
     
         _asteroidSpawn = new AsteroidSpawner(_stage);
-        _enemySpawner = new EnemySpawner(_stage);
-        _interSpawner = new IntersectionSpawner(_stage, 2);
+        _enemySpawner = new EnemySpawner(_stage,_enemies);
+        _interSpawner = new IntersectionSpawner(_stage, 2,_intersections);
         
         _gamePlayMusic = Gdx.audio.newMusic(Gdx.files.internal("Music/GameplayM.mp3"));
         _gamePlayMusic.setLooping(true);
         _gamePlayMusic.play();        
         //Agregando actores al stage
         _stage.addActor(_player);
+        _player.getbBox().x = _player.getX();
+        _player.getbBox().y = _player.getY();
         _stage.addActor(_fireButton);
         _stage.addActor(_background);
         
@@ -144,6 +158,19 @@ public class GameplayScreen extends Pantalla{
         }
         
         _stage.act(Gdx.graphics.getDeltaTime());
+        checkLists();
+        checkColitions();
+        if(gameOver)
+        {
+            this._game.setScreen(_game._gameOverScreen);
+            this.dispose();
+        }
+        if(nextStage)
+        {
+            this._game.setScreen(new GameplayScreen(_game, _user, _graph));
+            this._gamePlayMusic.dispose();
+        }
+        
         _stage.draw();
         ProcesarEntrada();
     }
@@ -185,33 +212,61 @@ public class GameplayScreen extends Pantalla{
             _controler.setIsPressed(false);
             
         }
-        
-         if(_controler.isDownMovement())
-         {
-             _player.MoveDown();
-             
-         }   
-        if(_controler.isUpMovement())
-        {
-            _player.MoveUp();
-            
-        }
-            
-        if(_controler.isLeftMovement())
-        {
-            _player.MoveLeft();
-            
-        }
-        if(_controler.isRightMovement())
-        {
-            _player.MoveRight();
-            
-        }if (_controler.isFireGun())
+        if(_controler.isDownMovement()){_player.MoveDown(); }   
+        if(_controler.isUpMovement()){_player.MoveUp();}
+        if(_controler.isLeftMovement()){_player.MoveLeft();}
+        if(_controler.isRightMovement()){_player.MoveRight();}
+        if (_controler.isFireGun())
         {
                         
         }
          
       
+    }
+    private void checkLists() 
+    {
+        for(int i = 0; i < _enemies.size ; i++ )
+        {
+            if(_enemies.get(i).getY() < 0)
+                _enemies.removeIndex(i);
+            if(_enemies.get(i).getLife() <= 0)
+                _enemies.removeIndex(i);
+        }
+        for(int i = 0; i < _intersections.size; i++)
+        {
+            
+        }
+        for(int i = 0; i < _bullets.size; i++)
+        {
+        
+        }    
+            
+    }
+    
+    private void checkColitions()
+    {
+        EnemyVehicle enemy;
+        for(int i = 0; i < _enemies.size; i++)
+        {
+            enemy = _enemies.get(i);
+            if(enemy.getbBox().overlaps(_player.getbBox()))
+            {
+               gameOver = true;
+            }
+            else
+            {
+                //colisiones con balas u otros elementos
+            }
+        }
+        Intersection inter;
+        for(int i = 0; i < _intersections.size; i++)
+        {
+            inter = _intersections.get(i);
+            if(inter.getbBox().overlaps(_player.getbBox()))
+                nextStage = true;
+            
+        }
+    
     }
     
     public static Stage getScene()
@@ -226,6 +281,8 @@ public class GameplayScreen extends Pantalla{
     public static ShootingPad getFireButton() {
         return _fireButton;
     }
+
+    
     
     
         

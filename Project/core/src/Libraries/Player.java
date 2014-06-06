@@ -32,6 +32,44 @@ public class Player {
         }
         return _instance;
     }
+
+    public int getLifes() {
+        return _lifes;
+    }
+
+    public long getPoints() {
+        return _points;
+    }
+
+    public String getName() {
+        return _name;
+    }
+
+    public PlayerVehicle getVehicle() {
+        return _vehicle;
+    }
+
+    public void setLifes(int _lifes) {
+        this._lifes = _lifes;
+    }
+
+    public void setPoints(long _points) {
+        this._points = _points;
+    }
+
+    public void setName(String _name) {
+        this._name = _name;
+    }
+
+    public void setVehicle(PlayerVehicle _vehicle) {
+        this._vehicle = _vehicle;
+    }
+
+    public static void setInstance(Player _instance) {
+        Player._instance = _instance;
+    }
+    
+    
     
     int _lifes;
     long _points;

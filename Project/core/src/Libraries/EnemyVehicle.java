@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -24,17 +25,18 @@ import com.gdx.EndlessGame.Main;
 public class EnemyVehicle extends Vehicle {
     
     private int _life;
+    private Rectangle _bBox;
     
     public EnemyVehicle(Texture pTexture, int x)
     {
         this._type = ElementType.ENEMY_VEHICLE;    
-        _life = 3;
+        _life = 1;
         _region = new TextureRegion(pTexture,0,0,pTexture.getWidth(), pTexture.getHeight());
         setSize(50, 50);
         setBounds(0, 0, getWidth(), getHeight());
         setPosition(x , GameplayScreen.getScene().getHeight());
         //setPosition(MathUtils.random(0, GameplayScreen.getScene().getWidth()), GameplayScreen.getScene().getHeight());
-        
+        _bBox = new Rectangle(getX(),getY(), getWidth(), getHeight());
                   
     }
 
@@ -46,13 +48,12 @@ public class EnemyVehicle extends Vehicle {
     @Override
     public void act(float delta) {
         
-        float newPos = getY() - 150 * delta;
-        if(newPos < 0)
-            this.remove();
-        if(this._life <= 0)
-            this.remove();
-        
+        float newPos = getY() - 150 * delta;                    
         setY(newPos);
+        _bBox.x = getX();
+        _bBox.y = getY();
+        _bBox.height = getHeight();
+        _bBox.width = getWidth();
         
         
        
@@ -69,5 +70,19 @@ public class EnemyVehicle extends Vehicle {
                 getScaleX(),getScaleY(),getRotation());
                 
     }
+
+    public Rectangle getbBox() {
+        return _bBox;
+    }
+
+    public int getLife() {
+        return _life;
+    }
+
+    public void setLife(int _life) {
+        this._life = _life;
+    }
+    
+    
     
 }

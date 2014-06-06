@@ -1,5 +1,6 @@
 package com.gdx.EndlessGame;
 
+import Libraries.Player;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Audio.*;
@@ -8,6 +9,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.*;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 
 
 
@@ -17,9 +19,10 @@ public class Main extends Game {
         private int _gameHeight;
         private int _gameWidth;
         public static AssetManager MANAGER;
+        private Player _player;
         
         //Declaracion de las diferentes screens
-        public Pantalla _loadingScreen, _menuScreen, _gameplayScreen;
+        public Pantalla _loadingScreen, _menuScreen, _gameplayScreen, _gameOverScreen;
         
 	
 	@Override
@@ -34,7 +37,8 @@ public class Main extends Game {
                 //Creacion de las pantallas
                 _loadingScreen = new LoadingScreen(this);
                 _menuScreen = new MenuScreen(this);
-                _gameplayScreen = new GameplayScreen(this);
+                _gameplayScreen = new GameplayScreen(this, _player, null);
+                _gameOverScreen = new GameOverScreen(this);
                 
                 MANAGER = new AssetManager();                   
                 LoadAssets();
