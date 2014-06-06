@@ -90,7 +90,7 @@ public class GameplayScreen extends Pantalla{
     
         _asteroidSpawn = new AsteroidSpawner(_stage);
         _enemySpawner = new EnemySpawner(_stage,_enemies);
-        _interSpawner = new IntersectionSpawner(_stage, 2,_intersections);
+        _interSpawner = new IntersectionSpawner(_stage, 3,_intersections);
         
         _gamePlayMusic = Gdx.audio.newMusic(Gdx.files.internal("Music/GameplayM.mp3"));
         _gamePlayMusic.setLooping(true);
@@ -229,7 +229,7 @@ public class GameplayScreen extends Pantalla{
         {
             if(_enemies.get(i).getY() < 0)
                 _enemies.removeIndex(i);
-            if(_enemies.get(i).getLife() <= 0)
+            else if(_enemies.get(i).getLife() <= 0)
                 _enemies.removeIndex(i);
         }
         for(int i = 0; i < _intersections.size; i++)
