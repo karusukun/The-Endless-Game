@@ -24,9 +24,11 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.gdx.EndlessGame.InputHandler.ShipKeyboardInput;
 import com.gdx.EndlessGame.InputHandler.ShipTouchInput;
+import com.gdx.EndlessGame.UIElements.BackgroundAnimation;
 import com.gdx.EndlessGame.UIElements.ShootingPad;
 import logic.AsteroidSpawner;
 import logic.EnemySpawner;
+import logic.IntersectionSpawner;
 import logic.VirtualControler;
 
 /**
@@ -41,6 +43,9 @@ public class GameplayScreen extends Pantalla{
     private VirtualControler _controler;
     private InputProcessor _keyboardInput, _touchInput;
     private InputMultiplexer _multiplexer;
+    private boolean spawnAsteroids = true;
+    private boolean spawnEnemies = true;
+    private boolean spawnInter = true;
     
     //Asserts
     private BackgroundAnimation _background;
@@ -49,18 +54,20 @@ public class GameplayScreen extends Pantalla{
     private static ShootingPad _fireButton;
     private AsteroidSpawner _asteroidSpawn;
     private EnemySpawner _enemySpawner;
+    private IntersectionSpawner _interSpawner;
     
     public GameplayScreen(Main pGame) {
         super(pGame);
-    }
-
-    @Override
-    public void show() {
         //Seteando el stage
         duracion = 0;
         
         _stage = new Stage();
         _stage.getViewport().setCamera(_game.camera);
+    }
+
+    @Override
+    public void show() {
+        
         //Seteando el jugador
         _player = new PlayerVehicle();
         
@@ -71,6 +78,7 @@ public class GameplayScreen extends Pantalla{
     
         _asteroidSpawn = new AsteroidSpawner(_stage);
         _enemySpawner = new EnemySpawner(_stage);
+        _interSpawner = new IntersectionSpawner(_stage, 2);
         
         _gamePlayMusic = Gdx.audio.newMusic(Gdx.files.internal("Music/GameplayM.mp3"));
         _gamePlayMusic.setLooping(true);
@@ -103,6 +111,8 @@ public class GameplayScreen extends Pantalla{
         duracion += f;
         _asteroidSpawn.setContadorSpawning(_asteroidSpawn.getContadorSpawning()+ f);
         _enemySpawner.setTimingSpawning(_enemySpawner.getTimingSpawning() + f);
+        _interSpawner.setSpawningTime(_interSpawner.getSpawningTime() + f);
+       
         
         Gdx.gl.glClear( GL20.GL_COLOR_BUFFER_BIT );
         Gdx.gl20.glClearColor(1f, 1f, 1f, 0.5f);
@@ -114,17 +124,25 @@ public class GameplayScreen extends Pantalla{
         _game.batch.end();
     
         
-        if(_asteroidSpawn.getContadorSpawning() > 1.5f)
+        if(spawnAsteroids && _asteroidSpawn.getContadorSpawning() > 0.5f)
         {
             _asteroidSpawn.SpawnAsteroid();
             _asteroidSpawn.setContadorSpawning(0);
         }
         
-        if(_enemySpawner.getTimingSpawning() > 2f)
+        if(spawnEnemies && _enemySpawner.getTimingSpawning() > 1.5f)
         {
             _enemySpawner.SpawnEnemy();
             _enemySpawner.setTimingSpawning(0);
         }
+        if(spawnInter && _interSpawner.getSpawningTime() > 5.0f)
+        {
+            _interSpawner.SpawnIntersections();
+            this.spawnAsteroids = false;
+            this.spawnEnemies = false;
+            this.spawnInter = false;
+        }
+        
         _stage.act(Gdx.graphics.getDeltaTime());
         _stage.draw();
         ProcesarEntrada();

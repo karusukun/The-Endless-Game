@@ -6,41 +6,39 @@
 
 package Libraries;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.gdx.EndlessGame.GameplayScreen;
 
 /**
  *
- * @author Carlos
+ * @author Karusu
  */
-public class Asteroid extends GameElement{
-
-    private TextureRegion _region;
+public class Intersection extends Actor {
     
-    public Asteroid(Texture pImage) {
+     private TextureRegion _region;
+    
+    public Intersection(Texture pImage, int x, int Width) {
         
-        _region = new TextureRegion(pImage,0, 0, pImage.getWidth(), pImage.getWidth());
-        setSize(pImage.getWidth(), pImage.getHeight());
-        setBounds(0, 0, getWidth(), getHeight());
-        setPosition(MathUtils.random(0, GameplayScreen.getScene().getWidth()), GameplayScreen.getScene().getHeight());
+        _region = new TextureRegion(pImage,0, 0, pImage.getWidth(), pImage.getWidth());        
+        setBounds(0, 0, getWidth(), Width);
+        setSize(Width, pImage.getHeight());
+        setPosition(x, GameplayScreen.getScene().getHeight());
     }
 
     @Override
     public void act(float delta) {
-           
-        float newPos = getY() - 200 * delta;
-        if(newPos < 0)
-            this.remove();
-        setY(newPos);
+        
+        float newPos = getY() - 120 * delta;
+        if(newPos < 480 - getHeight())
+            setY(getY());
+        else
+            setY(newPos);
         toBack();
         
-        rotateBy(0.3f);
        
     }
 

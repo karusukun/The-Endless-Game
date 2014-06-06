@@ -9,6 +9,7 @@ package Libraries;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -27,11 +28,13 @@ public class EnemyVehicle extends Vehicle {
     public EnemyVehicle(Texture pTexture, int x)
     {
         this._type = ElementType.ENEMY_VEHICLE;    
-        _life = 0;
-        this._region = new TextureRegion(pTexture,pTexture.getWidth(), pTexture.getHeight());
-        setPosition(x , GameplayScreen.getScene().getHeight());
-        setSize(70, 50);
+        _life = 3;
+        _region = new TextureRegion(pTexture,0,0,pTexture.getWidth(), pTexture.getHeight());
+        setSize(50, 50);
         setBounds(0, 0, getWidth(), getHeight());
+        setPosition(x , GameplayScreen.getScene().getHeight());
+        //setPosition(MathUtils.random(0, GameplayScreen.getScene().getWidth()), GameplayScreen.getScene().getHeight());
+        
                   
     }
 
@@ -43,11 +46,16 @@ public class EnemyVehicle extends Vehicle {
     @Override
     public void act(float delta) {
         
-        float newPos = getY() - 40 * delta;
+        float newPos = getY() - 150 * delta;
         if(newPos < 0)
             this.remove();
         if(this._life <= 0)
             this.remove();
+        
+        setY(newPos);
+        
+        
+       
     }
     
         

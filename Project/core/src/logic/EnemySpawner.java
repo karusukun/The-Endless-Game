@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
+import com.gdx.EndlessGame.GameplayScreen;
 import static com.gdx.EndlessGame.Main.MANAGER;
 
 /**
@@ -27,7 +28,7 @@ public class EnemySpawner
     public EnemySpawner(Stage pScene)
     {
         _timingSpawning = 0;
-        _remainingSpawns = 0;
+        _remainingSpawns = 3;
         
         _enemyImgs = new Array<Texture>();
         _enemyImgs.add(MANAGER.get("Enemies/enemyBlack1.png", Texture.class));
@@ -43,7 +44,9 @@ public class EnemySpawner
     {
         if(_remainingSpawns > 0)
         {
-            int enemyX = (int) (((MathUtils.random(40,85) % 3) +1) * 130);
+            int offset = 25;
+            int enemyX = (int) (((MathUtils.random(40,85) % 5) +1) * (GameplayScreen.getScene().getWidth()/5)) - offset*5;
+            //enemyX -= enemyX/2;
             _scene.addActor(new EnemyVehicle(_enemyImgs.get(MathUtils.random(0,_enemyImgs.size - 1 ) ),enemyX ));
             _remainingSpawns -=1;
         }

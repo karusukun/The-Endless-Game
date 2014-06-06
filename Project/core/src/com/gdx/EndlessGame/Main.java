@@ -31,14 +31,15 @@ public class Main extends Game {
                 camera.translate(_gameWidth /2, _gameHeight/2);
                 camera.update();
                 
-                
-                MANAGER = new AssetManager();                   
-                LoadAssets();
-                
                 //Creacion de las pantallas
                 _loadingScreen = new LoadingScreen(this);
                 _menuScreen = new MenuScreen(this);
                 _gameplayScreen = new GameplayScreen(this);
+                
+                MANAGER = new AssetManager();                   
+                LoadAssets();
+                
+                
                 //Setting first screen
                 setScreen(_loadingScreen);
                 

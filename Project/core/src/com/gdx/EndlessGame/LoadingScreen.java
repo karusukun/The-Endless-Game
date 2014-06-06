@@ -11,12 +11,13 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
+import com.badlogic.gdx.graphics.g2d.PolygonRegion;
+import com.badlogic.gdx.graphics.g2d.PolygonSprite;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.g2d.PolygonSprite;
-import com.badlogic.gdx.graphics.g2d.PolygonRegion;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 /**
  *
  * @author Carlos
@@ -25,16 +26,19 @@ public class LoadingScreen extends Pantalla{
 
     private Texture _loadingIMGText;
     private Sprite  _loadingIMGSpr;
-    Rectangle bucket;
+    private Stage scene;
     
     public LoadingScreen(Main pGame)
     {
-         super(pGame);   
+         super(pGame);  
+         scene = new Stage();
+         scene.getViewport().setCamera(_game.camera);
     }
 
     @Override
     public void show() 
-    {
+    {   
+        
                       
     }
     
@@ -73,12 +77,19 @@ public class LoadingScreen extends Pantalla{
                 
         _game.batch.begin();
         
+        scene.act(Gdx.graphics.getDeltaTime());
+        scene.draw();
+        
         if(_game.MANAGER.isLoaded("loading.png"))
         {
-            TextureRegion region = new TextureRegion(_game.MANAGER.get("loading.png",Texture.class), 0, 0,_game.getGameWidth(), _game.getGameHeight());
+            TextureRegion region = new TextureRegion(_game.MANAGER.get("loading.png",Texture.class), 0, 0,800,480);
+            region.setRegionWidth((int) scene.getViewport().getViewportWidth());
+            region.setRegionHeight((int) scene.getViewport().getViewportHeight());
             _loadingIMGSpr = new Sprite(region);
             _loadingIMGSpr.setPosition(0,0);
-            _loadingIMGSpr.draw(_game.batch);
+            scene.getBatch().begin();
+            _loadingIMGSpr.draw(scene.getBatch());
+            scene.getBatch().end();
         }
         if(_game.MANAGER.update())
         {
