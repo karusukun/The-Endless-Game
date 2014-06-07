@@ -57,6 +57,7 @@ public class GameplayScreen extends Pantalla{
     private  Array<EnemyVehicle> _enemies;
     private  Array<Intersection> _intersections;
     private Array<Bullet> _bullets;
+    private Array<Weapon> _weapon;
     private Node _graph;
     
     public GameplayScreen(Main pGame, Player pPlayer, Node pGraph) {
@@ -81,6 +82,7 @@ public class GameplayScreen extends Pantalla{
         _enemies = new Array<EnemyVehicle>();
         _bullets = new Array<Bullet>();
         _intersections = new Array<Intersection>();
+        _weapon = new Array<Weapon>();
         
         //Seteando los actores y los assets
         _fireButton = new ShootingPad(_controler);
@@ -93,7 +95,7 @@ public class GameplayScreen extends Pantalla{
         GraphAlgorithms.getInstance().generateIntersections(_graph);
         
         
-        _interSpawner = new IntersectionSpawner(_stage, _graph.getNodesList().size(),GraphAlgorithms.getInstance().getRecommendedPath(_graph),_intersections);
+        _interSpawner = new IntersectionSpawner(_stage, _graph.getNodesList().size(),GraphAlgorithms.getInstance().getRecommendedPath(_graph),_intersections, _weapon);
             
         //Agregando actores al stage
         _stage.addActor(_player);

@@ -41,7 +41,11 @@ public class AsteroidSpawner {
     
     public void SpawnAsteroid ()
     {
-        _scene.addActor(new Asteroid(_asteroidImgs.get(MathUtils.random(0,_asteroidImgs.size - 1))));
+        try{
+            _scene.addActor(new Asteroid(_asteroidImgs.get(MathUtils.random(0,_asteroidImgs.size - 1))));
+        }catch(Exception e){
+            System.out.println(e.toString());
+        }
     }
 
     public float getContadorSpawning() {

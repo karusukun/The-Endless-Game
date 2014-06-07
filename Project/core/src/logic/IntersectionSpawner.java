@@ -34,7 +34,13 @@ public class IntersectionSpawner {
     private int _recommendedPath;
        private Array<Weapon> _weapons;
     
+<<<<<<< HEAD
     public IntersectionSpawner(Stage pScene, int pIntersecNumber, int recommendedPath, Array<Intersection> pIntersections, Array<Weapon> pWeapons)
+=======
+    private static final int OFFSET = 25; //Margen para que salga centrado
+    
+    public IntersectionSpawner(Stage pScene, int pIntersecNumber, int recommendedPath, Array<Intersection> pIntersections)
+>>>>>>> e204daf45bbe7222af38d7173fbdd280c15f308a
     {
        _intersections = pIntersections;
        _weapons = pWeapons;
@@ -53,6 +59,7 @@ public class IntersectionSpawner {
     
     public void SpawnIntersections()
     {
+<<<<<<< HEAD
         
         int offset = 25;
         int interWidth = (GameplayScreen.getScene().getViewport().getViewportWidth()/_intersecNumber) - offset;
@@ -112,6 +119,69 @@ public class IntersectionSpawner {
                 tempActor.getbBox().x = tempActor.getX();
                 tempActor.getbBox().y = tempActor.getY();
                 break;
+=======
+        try{
+            int offset = OFFSET;
+            int interWidth = (GameplayScreen.getScene().getViewport().getViewportWidth()/_intersecNumber) - offset;
+            int interX = GameplayScreen.getScene().getViewport().getViewportWidth() - interWidth*_intersecNumber - (offset*_intersecNumber);
+            int actualX = interX;
+            Intersection tempActor;
+            if(_recommendedPath != -1)
+                GenerateArrow(interX, interWidth, _recommendedPath);
+
+            switch(_intersecNumber)
+            {
+
+                case 1:
+                   tempActor = new Intersection(_IntersecImgs.get(0), actualX+(offset*_intersecNumber)/2, interWidth);
+                   _scene.addActor(tempActor);
+                   _intersections.add(tempActor);
+                   tempActor.getbBox().x = tempActor.getX();
+                   tempActor.getbBox().y = tempActor.getY();
+                   break;
+
+                case 2:
+
+                    tempActor = new Intersection(_IntersecImgs.get(0), actualX+(offset*_intersecNumber)/2, interWidth);
+                    _scene.addActor(tempActor);
+                    _intersections.add(tempActor);
+                    tempActor.getbBox().x = tempActor.getX();
+                    tempActor.getbBox().y = tempActor.getY();
+                    actualX +=  interX + interWidth;
+
+                    tempActor = new Intersection(_IntersecImgs.get(1), actualX+(offset*_intersecNumber)/2, interWidth);
+                    _scene.addActor(tempActor);
+                    _intersections.add(tempActor);
+                    tempActor.getbBox().x = tempActor.getX();
+                    tempActor.getbBox().y = tempActor.getY();
+
+                    break;
+                case 3:
+
+                    tempActor = new Intersection(_IntersecImgs.get(0), actualX+(offset*_intersecNumber)/2, interWidth);
+                    _scene.addActor(tempActor);
+                    _intersections.add(tempActor);
+                    tempActor.getbBox().x = tempActor.getX();
+                    tempActor.getbBox().y = tempActor.getY();
+                    actualX +=  interX + interWidth; 
+
+                    tempActor = new Intersection(_IntersecImgs.get(1), actualX+(offset*_intersecNumber)/2, interWidth);
+                    _scene.addActor(tempActor);
+                    _intersections.add(tempActor);
+                    tempActor.getbBox().x = tempActor.getX();
+                    tempActor.getbBox().y = tempActor.getY();
+                    actualX +=  interX + interWidth;
+
+                    tempActor = new Intersection(_IntersecImgs.get(2), actualX+(offset*_intersecNumber)/2, interWidth);
+                    _scene.addActor(tempActor);
+                    _intersections.add(tempActor);
+                    tempActor.getbBox().x = tempActor.getX();
+                    tempActor.getbBox().y = tempActor.getY();
+                    break;
+            }
+        }catch(Exception e){
+            System.out.println(e.toString());
+>>>>>>> e204daf45bbe7222af38d7173fbdd280c15f308a
         }
     }
 
@@ -119,10 +189,11 @@ public class IntersectionSpawner {
         return _spawningTime;
     }
 
-    public void setSpawningTime(float _spawningTime) {
-        this._spawningTime = _spawningTime;
+    public void setSpawningTime(float pSpawningTime) {
+        this._spawningTime = pSpawningTime;
     }
 
+<<<<<<< HEAD
     private void GenerateWeaponPack()
     {
         Weapon weaponPack = Weapon.randomWeapon();
@@ -142,6 +213,19 @@ public class IntersectionSpawner {
         _scene.addActor(tmpArrow);
               
         
+=======
+    private void GenerateArrow(int pInterX, int pInterWidth,int pRecommendedPath )
+    {
+        try{
+            int offset = pInterWidth /2;
+            if(pRecommendedPath != 0)
+                pInterX += pInterX*(pRecommendedPath +1);
+            Arrow tmpArrow = new Arrow(_arrowText, pInterX + offset  , GameplayScreen.getScene().getViewport().getViewportHeight() - 180  );
+            _scene.addActor(tmpArrow);
+        }catch(Exception e){
+            System.out.println(e.toString());
+        }
+>>>>>>> e204daf45bbe7222af38d7173fbdd280c15f308a
     }
     
     
