@@ -144,7 +144,9 @@ public class GameplayScreen extends Pantalla{
         TextureRegion frame = _background._background.getKeyFrame(duracion, true);
         _game.batch.begin();
         _game.batch.draw(frame, 0, 0);
+        _stage.getBatch().begin();
         _sign.draw(_stage.getBatch(), f);
+        _stage.getBatch().end();
         _game.batch.end();
     
         
