@@ -25,11 +25,10 @@ public class ShootingPad extends Actor {
     
     private TextureRegion _button;
     private boolean _touched;
-    VirtualControler _controler;
+    private VirtualControler _controler;
     
     public ShootingPad(VirtualControler pControler)
     {
-        
         _controler = pControler;
         _button = new TextureRegion(Main.MANAGER.get("btnShooting.png", Texture.class),0,0,64,64);
         setPosition(GameplayScreen.getScene().getWidth() - 70, GameplayScreen.getScene().getHeight() / 2);
@@ -44,28 +43,24 @@ public class ShootingPad extends Actor {
                  return false;            
              }
          });
-        
     }
 
     public boolean isTouched() {
         return _touched;
     }
 
-    public void setTouched(boolean _touched) {
-        this._touched = _touched;
+    public void setTouched(boolean pTouched) {
+        this._touched = pTouched;
     }
-
-     
-
-    
-    
-    
     
 
     @Override
-    public void draw(Batch batch, float parentAlpha) {
-        
-        batch.draw(_button, getX(), getY());
+    public void draw(Batch pBatch, float pParentAlpha) {
+        try{
+        pBatch.draw(_button, getX(), getY());
+        }catch(Exception e){
+            System.out.println(e.toString());
+        }
     }
     
     

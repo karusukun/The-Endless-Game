@@ -21,6 +21,8 @@ public class GraphAlgorithms {
     //private HashTable _nodosHash;
     private ArrayList<Node> _VisitedList; // Dejaremos el tamano maximo en 30
     
+    private static final int PROBABILITY_TO_RECOMMEND = 10;
+    
     protected GraphAlgorithms(){
         //_nodosHash = new HashTable();
         _VisitedList = new ArrayList<Node>();
@@ -142,17 +144,24 @@ public class GraphAlgorithms {
     
     public int getRecommendedPath(Node node){ //Algritmo voraz que decide el camino
         try{
-            ArrayList<Node> nextNodesList = node.getNodesList();
-            for(int nodesIndex = 0; nodesIndex < nextNodesList.size(); nodesIndex++){
-                GraphAlgorithms.getInstance().generateIntersections(nextNodesList.get(nodesIndex));
-            }
-            Node ptr = nextNodesList.get(0);
-            for(int index = 0; index < nextNodesList.size(); index++){
-                if(nextNodesList.get(index).getNodesList().size() > ptr.getNodesList().size()){
-                    ptr = nextNodesList.get(index);
+            int probability = Math.abs(new Random().nextInt()) % 100;//Es 100 por se un porcentaje
+            
+            if(probability < PROBABILITY_TO_RECOMMEND){
+                ArrayList<Node> nextNodesList = node.getNodesList();
+                for(int nodesIndex = 0; nodesIndex < nextNodesList.size(); nodesIndex++){
+                    GraphAlgorithms.getInstance().generateIntersections(nextNodesList.get(nodesIndex));
                 }
+                Node ptr = nextNodesList.get(0);
+                for(int index = 0; index < nextNodesList.size(); index++){
+                    if(nextNodesList.get(index).getNodesList().size() > ptr.getNodesList().size()){
+                        ptr = nextNodesList.get(index);
+                    }
+                }
+                return nextNodesList.indexOf(ptr); // Retorna si debe elegir el primer, segundo o tercer camino
+            }else{
+                return -1;
             }
-            return nextNodesList.indexOf(ptr); // Retorna si debe elegir el primer, segundo o tercer camino
+            
         }catch(Exception e){
             System.out.println(e.toString());
             return 0;
