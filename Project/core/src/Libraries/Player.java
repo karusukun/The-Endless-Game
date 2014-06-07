@@ -21,7 +21,7 @@ public class Player {
         this._vehicle = new PlayerVehicle();
         _vehicle.setSpeed(5);
         _vehicle.setRemainingShots(2);
-        _vehicle.setActualWeapon(new Weapon(Color.BLACK, (byte)50));
+        _vehicle.setActualWeapon(new Weapon(Color.BLACK, (long)50));
     }
     
     public synchronized static Player getInstance()

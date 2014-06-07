@@ -33,16 +33,20 @@ public class GraphAlgorithms {
       return instance;
     }
     
-    public boolean wasNodeVisited(Node node){
+    public boolean wasNodeVisited(Node pNode){
+        if(pNode.getNodesList().isEmpty()){
+            this.generateIntersections(pNode);
+        }
+        
         for(int trail = 0; trail < _VisitedList.size(); trail++){
-            if(this.isGeneratedBackwards(_VisitedList.get(trail), node)){
-                node.setVisited(true);
+            if(this.isGeneratedBackwards(_VisitedList.get(trail), pNode)){
+                pNode.setVisited(true);
                 return true;
             }
         }
         // si llega aqui significa que no ha sido visitado
         for(int trail = 0; trail < _VisitedList.size(); trail++){
-            if(this.isGeneratedBackwards( node, _VisitedList.get(trail))){
+            if(this.isGeneratedBackwards( pNode, _VisitedList.get(trail))){
                 _VisitedList.remove(trail); // Lo eliminamos porque ya estamos por encima de el
             }
         }
@@ -50,19 +54,19 @@ public class GraphAlgorithms {
         // Osea que el noddo anterior no estaba en la lista, y tampoco este ha sido visitado
         
         if(_VisitedList.size() < 30){
-            _VisitedList.add(node);
+            _VisitedList.add(pNode);
         }
         else{
             Random random = new Random();
             int randNumber = random.nextInt()%_VisitedList.size();
             _VisitedList.remove(randNumber);
-            _VisitedList.add(node);
+            _VisitedList.add(pNode);
         }
         
         return false;
     }
     
-    public boolean isGeneratedBackwards(Node initialNode, Node nodeToFind){
+    private boolean isGeneratedBackwards(Node initialNode, Node nodeToFind){
         Node recorrido = new Node(initialNode.getSeed(),initialNode.getLevel());
         while(recorrido.getLevel() != nodeToFind.getLevel()){
             double newSeed = (double)Math.ceil(recorrido.getSeed() / 3);
@@ -75,12 +79,9 @@ public class GraphAlgorithms {
         return false;
     }
     
-    public void generateIntersections(Node node){
+    private void generateIntersections(Node node){
         int cantNext = cantNodesSiguientes(node.getSeed());
-        
         double seedInicial = ((node.getSeed() - 1)*3)+1;
-        
-        
         for(int numNodo = 0; numNodo < cantNext; numNodo++){
             Node nuevoNodo = new Node(seedInicial,node.getLevel()+1);
             node.getNodesList().add(nuevoNodo);
@@ -108,7 +109,7 @@ public class GraphAlgorithms {
     }
     
     
-    public int cantNodesSiguientes(double seed){
+    private int cantNodesSiguientes(double seed){
         if(seed % 3 == 0)
             return 1;
         if(seed % 2 == 0)
@@ -117,7 +118,8 @@ public class GraphAlgorithms {
             return 3;
     }
     
-    public int getRecommendedPath(ArrayList<Node> nextNodesList){ //Algritmo voraz que decide el camino
+    public int getRecommendedPath(Node node){ //Algritmo voraz que decide el camino
+        ArrayList<Node> nextNodesList = node.getNodesList();
         for(int nodesIndex = 0; nodesIndex < nextNodesList.size(); nodesIndex++){
             GraphAlgorithms.getInstance().generateIntersections(nextNodesList.get(nodesIndex));
         }
@@ -130,8 +132,8 @@ public class GraphAlgorithms {
         return nextNodesList.indexOf(ptr); // Retorna si debe elegir el primer, segundo o tercer camino
     }
     
-    private int sizeTransitiveClosure(Node pNode){
-        return 0;
+    public Node getInitialNode(){
+        return new Node(1,1);
     }
     
     
