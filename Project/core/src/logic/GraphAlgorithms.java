@@ -63,6 +63,7 @@ public class GraphAlgorithms {
 
             return false;
         }catch(Exception e){
+            e.printStackTrace();
             System.out.println(e.toString());
             return false;
         }
