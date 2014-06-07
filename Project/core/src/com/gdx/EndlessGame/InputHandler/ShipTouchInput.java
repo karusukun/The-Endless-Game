@@ -41,7 +41,7 @@ public class ShipTouchInput extends InputAdapter {
     @Override
     public boolean touchUp(int pScreenX, int pScreenY, int pPointer, int pButton) {
         try{
-            controler.setFireGun(true);
+            
             return true;
         }catch(Exception e){
             System.out.println(e.toString());

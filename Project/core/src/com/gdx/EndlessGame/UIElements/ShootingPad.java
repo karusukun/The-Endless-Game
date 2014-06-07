@@ -38,12 +38,10 @@ public class ShootingPad extends Actor {
         
         addListener(new InputListener() {
             
-            
-
-          
              public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) 
              {
-                 _controler.setFireGun(true);
+                 System.out.println("pew pew");
+                 _touched = true;
                  return true;            
              }
          });

@@ -105,9 +105,11 @@ public class GameplayScreen extends Pantalla{
         _multiplexer = new InputMultiplexer();
         
         //agregando los diferentes tipos de entradas definidas
+        
+        _multiplexer.addProcessor(_stage);
         _multiplexer.addProcessor(_touchInput);
         _multiplexer.addProcessor(_keyboardInput);
-        _multiplexer.addProcessor(_stage);
+        
         Gdx.input.setInputProcessor(_multiplexer);
         
         
@@ -214,7 +216,7 @@ public class GameplayScreen extends Pantalla{
         if(_controler.isUpMovement()){_player.MoveUp();}
         if(_controler.isLeftMovement()){_player.MoveLeft();}
         if(_controler.isRightMovement()){_player.MoveRight();}
-        if (_controler.isFireGun() )//|| _fireButton.isTouched())
+        if (_controler.isFireGun() || _fireButton.isTouched())
         {
              Bullet bullet = new Bullet(1, (int)_player.getX()+20,(int)_player.getY() + (int)_player.getHeight() + 30);
              _bullets.add(bullet);
@@ -222,6 +224,7 @@ public class GameplayScreen extends Pantalla{
              bullet.getbBox().x = bullet.getX();
              bullet.getbBox().y = bullet.getY();
              _controler.setFireGun(false);
+             _fireButton.setTouched(false);
              Main.mixer.PlaySfxLaser();
         }
          
