@@ -40,6 +40,7 @@ public class PlayerVehicle extends Vehicle
        setBounds(0, 0, getWidth(), getHeight());
        setPosition(GameplayScreen.getScene().getViewport().getViewportWidth()/2 ,30);
        setTouchable(Touchable.enabled);
+       _remainingShots = 2;
     
        _bBox = new Rectangle(getX(), getY(), getWidth(), getHeight());
        

@@ -7,10 +7,13 @@
 package com.gdx.EndlessGame.UIElements;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.gdx.EndlessGame.GameplayScreen;
@@ -24,12 +27,24 @@ public class SignAnimation  extends Actor {
     
      private float _duration = 1.0f;
      private TextureRegion _region;
+     private boolean _draw;
+     private Color _FontColor;
+     private BitmapFont _font;
+     private String _display;
      
-     
-     public SignAnimation(boolean Visited, int Score, String numeroInter)
+     public SignAnimation( boolean Visited, int Score, String numeroInter)
      {
-         _duration = 0;
+         
+         _draw = true;
+         if(Visited)
+             _FontColor = Color.GREEN;
+         else
+             _FontColor = Color.YELLOW;
          Texture tempText = Main.MANAGER.get("sign.png", Texture.class);
+         _display = "Score: "+Score+ " Inter "+ numeroInter; 
+         _font = new BitmapFont();
+         _font.setColor(_FontColor);
+         _font.setScale(0.6f);
          _region = new TextureRegion(tempText,0,0,tempText.getWidth(),tempText.getHeight());
          setPosition(0, 0);
         
@@ -39,7 +54,10 @@ public class SignAnimation  extends Actor {
     public void act(float delta) {
         _duration -= delta;
             if(_duration < 0)
+            {    
                 this.remove();
+                this._draw = false;
+            }
     }
      
      
@@ -48,17 +66,11 @@ public class SignAnimation  extends Actor {
     public void draw(Batch pBatch, float pParentAlpha) {
         try
         {
-            Gdx.gl.glClear( GL20.GL_COLOR_BUFFER_BIT );
-            pBatch.setColor(1.0f, 1.0f, 1.0f, _duration); 
-            
             
             pBatch.draw(_region,getX(),getY(),getOriginX(),
                       getOriginY(),getWidth(),getHeight(),
                       getScaleX(),getScaleY(),getRotation());
-            System.out.println("en teoria dibuje :/");
-            
-            Gdx.gl.glClearColor( 1f, 1f, 1f, 0.5f );
-        
+            System.out.println("post draw");
                 
         }
         catch(Exception e){
@@ -66,5 +78,57 @@ public class SignAnimation  extends Actor {
             System.out.println(e.toString());
         }
     }
+
+    public float getDuration() {
+        return _duration;
+    }
+
+    public TextureRegion getRegion() {
+        return _region;
+    }
+
+    public void setDuration(float _duration) {
+        this._duration = _duration;
+    }
+
+    public void setRegion(TextureRegion _region) {
+        this._region = _region;
+    }
+
+    public boolean isDraw() {
+        return _draw;
+    }
+
+    public void setDraw(boolean _draw) {
+        this._draw = _draw;
+    }
+
+    public Color getFontColor() {
+        return _FontColor;
+    }
+
+    public BitmapFont getFont() {
+        return _font;
+    }
+
+    public String getDisplay() {
+        return _display;
+    }
+
+    public void setFontColor(Color _FontColor) {
+        this._FontColor = _FontColor;
+    }
+
+    public void setFont(BitmapFont _font) {
+        this._font = _font;
+    }
+
+    public void setDisplay(String _display) {
+        this._display = _display;
+    }
+    
+    
+    
+    
     
 }

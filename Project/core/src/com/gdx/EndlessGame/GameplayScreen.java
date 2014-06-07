@@ -11,6 +11,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -143,10 +144,18 @@ public class GameplayScreen extends Pantalla{
         //dibujar background
         TextureRegion frame = _background._background.getKeyFrame(duracion, true);
         _game.batch.begin();
+        //dibujar Background
         _game.batch.draw(frame, 0, 0);
-        _stage.getBatch().begin();
-        _sign.draw(_stage.getBatch(), f);
-        _stage.getBatch().end();
+        //dibujar Sign
+        
+         if(_sign.isDraw())
+         {
+            Color color = _game.batch.getColor();
+            _game.batch.setColor(1.0f, 1.0f, 1.0f, _sign.getDuration());
+            _game.batch.draw(_sign.getRegion(), 0, 0);
+            _sign.getFont().draw(_game.batch, _sign.getDisplay(), 81, 150);
+            _game.batch.setColor(color);
+         }
         _game.batch.end();
     
         
@@ -230,7 +239,7 @@ public class GameplayScreen extends Pantalla{
         if(_controler.isUpMovement()){_player.MoveUp();}
         if(_controler.isLeftMovement()){_player.MoveLeft();}
         if(_controler.isRightMovement()){_player.MoveRight();}
-        if (_controler.isFireGun() || _fireButton.isTouched())
+        if ((_controler.isFireGun() || _fireButton.isTouched()) && _player.getRemainingShots() > 0 )
         {
              Bullet bullet = new Bullet(1, (int)_player.getX()+20,(int)_player.getY() + (int)_player.getHeight() + 30, _user.getWeapon().getBeamThickness());
              _bullets.add(bullet);
@@ -239,6 +248,7 @@ public class GameplayScreen extends Pantalla{
              bullet.getbBox().y = bullet.getY();
              _controler.setFireGun(false);
              _fireButton.setTouched(false);
+             _player.setRemainingShots(_player.getRemainingShots() -1);
              Main.mixer.PlaySfxLaser();
         }
          
