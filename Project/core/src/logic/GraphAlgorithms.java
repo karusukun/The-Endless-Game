@@ -103,6 +103,7 @@ public class GraphAlgorithms {
                 int replacePos = node.getNodesList().size() -1;
                 node.getNodesList().remove(replacePos);
                 node.getNodesList().add(replacePos, generateDevolution(node));
+                //node.getNodesList().add(generateDevolution(node));
 
             }
         }catch(Exception e){
