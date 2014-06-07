@@ -229,8 +229,8 @@ public class GameplayScreen extends Pantalla{
         {
             
             _player.setDragged(false);
-            _player.setX( _controler.getNewX() - _player.getWidth() / 2);
-            _player.setY( (Gdx.graphics.getHeight() - _controler.getNewY()) - _player.getHeight() / 2 );
+            //_player.setX( _controler.getNewX() - _player.getWidth() / 2);
+            //_player.setY( (Gdx.graphics.getHeight() - _controler.getNewY()) - _player.getHeight() / 2 );
             _player.getbBox().x = _player.getX();
             _player.getbBox().y = _player.getY();
             _player.getbBox().height = _player.getHeight();

@@ -6,6 +6,7 @@
 
 package com.gdx.EndlessGame.InputHandler;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.gdx.EndlessGame.GameplayScreen;
 import logic.VirtualControler;
@@ -30,8 +31,11 @@ public class ShipTouchInput extends InputAdapter {
         {
             GameplayScreen.getPlayer().setDragged(true);
             _controler.setIsPressed(true);
-            _controler.setNewX(pScreenX);
-            _controler.setNewY(pScreenY);
+            GameplayScreen.getPlayer().setPosition(pScreenX - GameplayScreen.getPlayer().getWidth() /
+                                                    2, Gdx.graphics.getHeight() - pScreenY - GameplayScreen.getPlayer().getHeight() / 2 );
+            
+            /*_controler.setNewX(pScreenX);
+            _controler.setNewY(pScreenY);*/
         }
         return false;
         }catch(Exception e){
