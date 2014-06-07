@@ -20,7 +20,7 @@ public class GeneticFitness {
     
     public static Weapon selectDad(ArrayList<Weapon> candidates){
         try{
-            if(candidates.isEmpty()){
+            if(!candidates.isEmpty()){
 
 
                 Random random = new Random();

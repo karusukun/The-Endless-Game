@@ -284,6 +284,8 @@ public class GameplayScreen extends Pantalla{
             {
                 Weapon newWeapon = WeaponLogic.getInstance().newWeapon(_user.getWeapon());
                 _user.setWeapon(newWeapon);
+                _weapons.get(position).remove();
+                _weapons.removeIndex(position);
             }
         }
 
