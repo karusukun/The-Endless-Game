@@ -26,17 +26,21 @@ public class EnemyVehicle extends Vehicle {
     
     private int _life;
     private Rectangle _bBox;
+    private boolean _shooting;
     
     public EnemyVehicle(Texture pTexture, int x)
     {
         this._type = ElementType.ENEMY_VEHICLE;    
         _life = 1;
+        _shooting = false;
+        
         _region = new TextureRegion(pTexture,0,0,pTexture.getWidth(), pTexture.getHeight());
         setSize(50, 50);
         setBounds(0, 0, getWidth(), getHeight());
         setPosition(x , GameplayScreen.getScene().getHeight());
         //setPosition(MathUtils.random(0, GameplayScreen.getScene().getWidth()), GameplayScreen.getScene().getHeight());
         _bBox = new Rectangle(getX(),getY(), getWidth(), getHeight());
+        
                   
     }
 
@@ -54,7 +58,11 @@ public class EnemyVehicle extends Vehicle {
         _bBox.y = getY();
         _bBox.height = getHeight();
         _bBox.width = getWidth();
-              
+        if(GameplayScreen.getPlayer().getX()+GameplayScreen.getPlayer().getWidth()/2 
+                == getX()+ getWidth()/2 )
+        {
+            _shooting = true;
+        }
     }
     
         
@@ -80,6 +88,17 @@ public class EnemyVehicle extends Vehicle {
     public void setLife(int _life) {
         this._life = _life;
     }
+
+    public boolean isShooting() {
+        return _shooting;
+    }
+
+    public void setShooting(boolean _shooting) {
+        this._shooting = _shooting;
+    }
+    
+    
+    
     
     
     

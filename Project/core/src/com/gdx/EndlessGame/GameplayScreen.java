@@ -272,6 +272,18 @@ public class GameplayScreen extends Pantalla{
             enemy = _enemies.get(position);
             if(enemy.getbBox().overlaps(_player.getbBox()))
             {
+                if(enemy.isShooting())
+                {
+                    enemy.setShooting(false);
+                    Bullet EnemyBullet = new Bullet(-1, (int)enemy.getX()+20,(int)enemy.getY() + (int)enemy.getHeight() + 30);
+                    _bullets.add(EnemyBullet);
+                    _stage.addActor(EnemyBullet);
+                    EnemyBullet.getbBox().x = EnemyBullet.getX();
+                    EnemyBullet.getbBox().y = EnemyBullet.getY();
+                    Main.mixer.PlaySfxLaser();
+                    
+                }
+                
                 _user.setLifes(_user.getLifes() - 1);
                 _enemies.removeIndex(position);
                 enemy.remove();
