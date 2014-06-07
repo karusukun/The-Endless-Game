@@ -56,16 +56,13 @@ public class IntersectionSpawner {
         int interX = GameplayScreen.getScene().getViewport().getViewportWidth() - interWidth*_intersecNumber - (offset*_intersecNumber);
         int actualX = interX;
         Intersection tempActor;
+        if(_recommendedPath != -1)
+            GenerateArrow(interX, interWidth, _recommendedPath);
+              
         switch(_intersecNumber)
         {
             
             case 1:
-                
-               if(_recommendedPath == 0)
-               {
-                   Arrow tmpArrow = new Arrow(_arrowText, interX + 50, interWidth - 30);
-                   
-               }
                tempActor = new Intersection(_IntersecImgs.get(0), actualX+(offset*_intersecNumber)/2, interWidth);
                _scene.addActor(tempActor);
                _intersections.add(tempActor);
@@ -74,22 +71,14 @@ public class IntersectionSpawner {
                break;
                 
             case 2:
-                if(_recommendedPath == 0)
-                {
-                    Arrow tmpArrow = new Arrow(_arrowText, interX + 50, interWidth - 30);
-                    _scene.addActor(tmpArrow);
-                }
+                
                 tempActor = new Intersection(_IntersecImgs.get(0), actualX+(offset*_intersecNumber)/2, interWidth);
                 _scene.addActor(tempActor);
                 _intersections.add(tempActor);
                 tempActor.getbBox().x = tempActor.getX();
                 tempActor.getbBox().y = tempActor.getY();
                 actualX +=  interX + interWidth;
-                if(_recommendedPath == 1)
-               {
-                   Arrow tmpArrow = new Arrow(_arrowText, interX + 50, interWidth - 30);
-                   _scene.addActor(tmpArrow);
-               }
+                
                 tempActor = new Intersection(_IntersecImgs.get(1), actualX+(offset*_intersecNumber)/2, interWidth);
                 _scene.addActor(tempActor);
                 _intersections.add(tempActor);
@@ -98,33 +87,21 @@ public class IntersectionSpawner {
                 
                 break;
             case 3:
-                if(_recommendedPath == 0)
-                {
-                    Arrow tmpArrow = new Arrow(_arrowText, interX + 50, interWidth - 30);
-                    _scene.addActor(tmpArrow);
-                }
+                
                 tempActor = new Intersection(_IntersecImgs.get(0), actualX+(offset*_intersecNumber)/2, interWidth);
                 _scene.addActor(tempActor);
                 _intersections.add(tempActor);
                 tempActor.getbBox().x = tempActor.getX();
                 tempActor.getbBox().y = tempActor.getY();
                 actualX +=  interX + interWidth; 
-                if(_recommendedPath == 1)
-               {
-                   Arrow tmpArrow = new Arrow(_arrowText, interX + 50, interWidth - 30);
-                   _scene.addActor(tmpArrow);
-               }
+                
                 tempActor = new Intersection(_IntersecImgs.get(1), actualX+(offset*_intersecNumber)/2, interWidth);
                 _scene.addActor(tempActor);
                 _intersections.add(tempActor);
                 tempActor.getbBox().x = tempActor.getX();
                 tempActor.getbBox().y = tempActor.getY();
                 actualX +=  interX + interWidth;
-                if(_recommendedPath == 2)
-               {
-                   Arrow tmpArrow = new Arrow(_arrowText, interX + 50, interWidth - 30);
-                   _scene.addActor(tmpArrow);
-               }
+               
                 tempActor = new Intersection(_IntersecImgs.get(2), actualX+(offset*_intersecNumber)/2, interWidth);
                 _scene.addActor(tempActor);
                 _intersections.add(tempActor);
@@ -142,6 +119,13 @@ public class IntersectionSpawner {
         this._spawningTime = _spawningTime;
     }
 
+    private void GenerateArrow(int interX, int interWidth,int recommendedPath )
+    {
+        if(recommendedPath != 0)
+            interX += interX*(recommendedPath +1);
+        Arrow tmpArrow = new Arrow(_arrowText, interX + 80, interWidth - 30);
+        _scene.addActor(tmpArrow);
+    }
     
     
 }

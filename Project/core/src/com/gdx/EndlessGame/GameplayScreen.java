@@ -323,6 +323,7 @@ public class GameplayScreen extends Pantalla{
             if(inter.getbBox().overlaps(_player.getbBox())){
                 nextStage = true;
                 _graph = _graph.getNodesList().get(position);
+                System.out.println(_graph.getSeed());
                 Main.mixer.PlaySfxNextStage();
             }
         }

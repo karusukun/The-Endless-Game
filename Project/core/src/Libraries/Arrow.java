@@ -24,7 +24,7 @@ public class Arrow extends Actor{
     public Arrow(Texture pImage, int x, int y) {
         
         _region = new TextureRegion(pImage,0, 0, pImage.getWidth(), pImage.getWidth());
-        setSize(pImage.getWidth(), pImage.getHeight());
+        setSize(64, 64);
         setBounds(0, 0, getWidth(), getHeight());
         setPosition(x, y);
     }
