@@ -40,10 +40,14 @@ public class SoundMixer {
           
     }
     
-    public void PlayGamePMusic(boolean looping)
+    public void PlayGamePMusic(boolean pIsLooping)
     {
-        _gamePlayMusic.setLooping(looping);
+        try{
+        _gamePlayMusic.setLooping(pIsLooping);
         _gamePlayMusic.play();  
+        }catch(Exception e){
+            System.out.println(e.toString());
+        }
     }
     public void StopGamePMusic()
     {

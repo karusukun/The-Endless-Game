@@ -29,7 +29,6 @@ public class BackgroundAnimation  extends Actor {
      
      public BackgroundAnimation()
      {
-         
          _duration = 0;
          _frames = new TextureRegion[2];
          _frames[0] = new TextureRegion(Main.MANAGER.get("Backgrounds/black.png",Texture.class),0,0,800,480);
@@ -40,16 +39,17 @@ public class BackgroundAnimation  extends Actor {
          _frames[1].setRegionHeight(GameplayScreen.getScene().getViewport().getViewportHeight());
              
          _background = new Animation(1f,_frames);
-         
      }
 
     @Override
-    public void draw(Batch batch, float parentAlpha) {
-            
+    public void draw(Batch pBatch, float pParentAlpha) {
+        try{
         _duration += Gdx.graphics.getDeltaTime();
         TextureRegion frame = _background.getKeyFrame(_duration, true);
-        batch.draw(frame, getX(), getY());
-        
+        pBatch.draw(frame, getX(), getY());
+        }catch(Exception e){
+            System.out.println(e.toString());
+        }
     }
     
      
