@@ -27,8 +27,9 @@ public class Bullet extends GameElement{
     private Rectangle _bBox;
     private Array<Texture> _textures;
     private Texture _actualText;
+    private int _beamWidth;
     
-    public Bullet(int pDirection, int x, int y)
+    public Bullet(int pDirection, int x, int y, int thickness)
     {
         _textures = new Array<Texture>();
         _indexText = 0;
@@ -42,9 +43,10 @@ public class Bullet extends GameElement{
         _textures.add(MANAGER.get("Lasers/laserRed07.png", Texture.class));
         
         _actualText = _textures.get(0);
+        _beamWidth = (thickness + 1)*15;
         
         _direction = pDirection;
-        _region = new TextureRegion(_actualText,0, 0, _actualText.getWidth(), _actualText.getWidth());
+        _region = new TextureRegion(_actualText,0, 0, _actualText.getWidth(), _beamWidth);
         setSize(_actualText.getWidth(), _actualText.getHeight());
         setBounds(0, 0, getWidth(), getHeight());
         setPosition(x, y);
@@ -67,7 +69,7 @@ public class Bullet extends GameElement{
             _bBox.width = getWidth();
             toBack();
             _actualText = _textures.get(_indexText);
-            _region = new TextureRegion(_actualText,0, 0, _actualText.getWidth(), _actualText.getWidth());
+            _region = new TextureRegion(_actualText,0, 0, _actualText.getWidth(), _beamWidth);
         }catch(Exception e){
             System.out.println(e.toString());
         }

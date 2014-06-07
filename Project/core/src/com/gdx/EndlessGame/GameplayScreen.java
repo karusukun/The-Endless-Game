@@ -225,7 +225,7 @@ public class GameplayScreen extends Pantalla{
         if(_controler.isRightMovement()){_player.MoveRight();}
         if (_controler.isFireGun() || _fireButton.isTouched())
         {
-             Bullet bullet = new Bullet(1, (int)_player.getX()+20,(int)_player.getY() + (int)_player.getHeight() + 30);
+             Bullet bullet = new Bullet(1, (int)_player.getX()+20,(int)_player.getY() + (int)_player.getHeight() + 30, _user.getWeapon().getBeamThickness());
              _bullets.add(bullet);
              _stage.addActor(bullet);
              bullet.getbBox().x = bullet.getX();
@@ -254,11 +254,7 @@ public class GameplayScreen extends Pantalla{
                 
             }
         }
-  /*      for(int position = 0; position < _intersections.size; position++)
-        {
-            
-        }
-   */     
+  
         Bullet bullet;
         for(int position = 0; position < _bullets.size; position++)
         {
@@ -296,7 +292,7 @@ public class GameplayScreen extends Pantalla{
             if(enemy.isShooting())
                 {
                     enemy.setShooting(false);
-                    Bullet EnemyBullet = new Bullet(-1, (int)enemy.getX()+20,(int)enemy.getY() - (int)(enemy.getHeight()) - 30);
+                    Bullet EnemyBullet = new Bullet(-1, (int)enemy.getX()+20,(int)enemy.getY() - (int)(enemy.getHeight()) - 30, 0);
                     _bullets.add(EnemyBullet);
                     _stage.addActor(EnemyBullet);
                     EnemyBullet.getbBox().x = EnemyBullet.getX();
@@ -335,9 +331,16 @@ public class GameplayScreen extends Pantalla{
         Intersection inter;
         for(int position = 0; position < _intersections.size; position++)
         {
+            if(GraphAlgorithms.getInstance().wasNodeVisited(_graph))
+                _user.setPoints(_user.getPoints() + 1);
+            else
+                _user.setPoints(_user.getPoints() + 3);
+            
             inter = _intersections.get(position);
             if(inter.getbBox().overlaps(_player.getbBox())){
                 nextStage = true;
+                if(_graph.getNodesList().isEmpty())
+                    GraphAlgorithms.getInstance().generateIntersections(_graph);
                 _graph = _graph.getNodesList().get(position);
                 System.out.println(_graph.getSeed());
                 Main.mixer.PlaySfxNextStage();
