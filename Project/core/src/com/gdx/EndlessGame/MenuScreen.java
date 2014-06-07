@@ -15,16 +15,17 @@ import com.badlogic.gdx.graphics.GL20;
  */
 public class MenuScreen extends Pantalla {
 
+    private boolean _Start,_exit;
+    
     public MenuScreen(Main pGame) {
         super(pGame);
+        _Start = _exit = false;
     }
 
     @Override
     public void show() {
         
-         Main.mixer.PlayGamePMusic(true);
-         _game.setScreen(_game._gameplayScreen);
-         _game.getPlayer().GenerateFirstWeapon();
+         Main.mixer.PlayMenuMusic(_exit);
     }
 
     @Override
@@ -64,7 +65,16 @@ public class MenuScreen extends Pantalla {
         
         _game.batch.end();
         
-       
+        if(_Start)
+        {
+            
+         _game.setScreen(_game._gameplayScreen);
+         _game.getPlayer().GenerateFirstWeapon();
+         Main.mixer.StopMenuMusic(_exit);
+        }
+        if(_exit)
+            _game.dispose();
+        
     }
     
     

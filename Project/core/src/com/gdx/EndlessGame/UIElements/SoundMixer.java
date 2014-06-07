@@ -49,6 +49,37 @@ public class SoundMixer {
             System.out.println(e.toString());
         }
     }
+    
+    public void PlayGameOverM(boolean pIsLooping)
+    {
+        try{
+        _HeavyEnd.setLooping(pIsLooping);
+        _gamePlayMusic.play();  
+        }catch(Exception e){
+            System.out.println(e.toString());
+        }
+    }
+    
+    public void PlayMenuMusic(boolean pIsLooping)
+    {
+        try{
+        _PMS.setLooping(pIsLooping);
+        _PMS.play();  
+        }catch(Exception e){
+            System.out.println(e.toString());
+        }
+    }
+    
+    public void StopMenuMusic(boolean pIsLooping)
+    {
+        _PMS.stop();
+    }
+    
+    public void StopGameOverM(boolean pIsLooping)
+    {
+        this._HeavyEnd.stop();
+    }
+    
     public void StopGamePMusic()
     {
         _gamePlayMusic.stop();
