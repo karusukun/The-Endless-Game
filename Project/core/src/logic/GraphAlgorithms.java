@@ -66,6 +66,7 @@ public class GraphAlgorithms {
                 _VisitedList.add(pNode);
             }
             pNode.setNodesList(new ArrayList<Node>());
+            this.generateIntersections(pNode);
             return false;
         }catch(Exception e){
             System.out.println(e.toString());
@@ -97,6 +98,8 @@ public class GraphAlgorithms {
 
     public void generateIntersections(Node node){
         try{
+            node.setNodesList(new ArrayList<Node>());
+            
             int cantNext = cantNodesSiguientes(node.getSeed());
             double seedInicial = ((node.getSeed() - 1)*3)+1;
             for(int numNodo = 0; numNodo < cantNext; numNodo++){
