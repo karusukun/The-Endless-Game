@@ -22,27 +22,36 @@ public class ShipTouchInput extends InputAdapter {
         this._controler = pControler;
     }
 
-    @Override
+    //@Override
+    
     public boolean touchDragged(int pScreenX, int pScreenY, int pPointer) {
         try{
-        if(GameplayScreen.getPlayer().isTouched())
+        if(GameplayScreen.getPlayer().isTouched() && GameplayScreen.getPlayer()._touchdown && GameplayScreen.getFireButton().isTouched() == false)
         {
+            GameplayScreen.getPlayer().setDragged(true);
             _controler.setIsPressed(true);
             _controler.setNewX(pScreenX);
             _controler.setNewY(pScreenY);
         }
-        return true;
+        return false;
         }catch(Exception e){
             System.out.println(e.toString());
             return false;
         }
     }
-
+    
     @Override
     public boolean touchUp(int pScreenX, int pScreenY, int pPointer, int pButton) {
         try{
-            _controler.setIsPressed(false);
-            return true;
+            
+            
+            if(GameplayScreen.getPlayer()._touchdown)
+            {
+                GameplayScreen.getPlayer().setTouched(false);
+                return true;
+            }
+            else
+                return false;
         }catch(Exception e){
             System.out.println(e.toString());
             return false;
@@ -52,8 +61,14 @@ public class ShipTouchInput extends InputAdapter {
     @Override
     public boolean touchDown(int pScreenX, int pScreenY, int pPointer, int pButton) {
         try{
-            _controler.setIsPressed(true);
-            return true;
+            System.out.println("entre touchdown de Controler");
+           if(GameplayScreen.getPlayer()._touchdown)
+            {
+                GameplayScreen.getPlayer().setTouched(true);
+                return true;
+            }
+            else
+                return false;
          }catch(Exception e){
             System.out.println(e.toString());
             return false;

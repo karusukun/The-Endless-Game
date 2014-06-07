@@ -82,10 +82,10 @@ public class LoadingScreen extends Pantalla{
         
         if(_game.MANAGER.isLoaded("loading.png"))
         {
-            TextureRegion region = new TextureRegion(_game.MANAGER.get("loading.png",Texture.class), 0, 0,800,480);
-            region.setRegionWidth((int) scene.getViewport().getViewportWidth());
-            region.setRegionHeight((int) scene.getViewport().getViewportHeight());
+            Texture tempText = _game.MANAGER.get("loading.png",Texture.class);
+            TextureRegion region = new TextureRegion(tempText, 0, 0,tempText.getWidth(),tempText.getHeight());
             _loadingIMGSpr = new Sprite(region);
+            _loadingIMGSpr.setSize(scene.getWidth(), scene.getHeight());
             _loadingIMGSpr.setPosition(0,0);
             scene.getBatch().begin();
             _loadingIMGSpr.draw(scene.getBatch());

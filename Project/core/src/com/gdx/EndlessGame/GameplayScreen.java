@@ -79,8 +79,9 @@ public class GameplayScreen extends Pantalla{
     @Override
     public void show() {
         
+        _controler = new VirtualControler();
         //Seteando el jugador
-        _player = new PlayerVehicle();
+        _player = new PlayerVehicle(_controler);
         //setting Game managements
         _enemies = new Array<EnemyVehicle>();
         _bullets = new Array<Bullet>();
@@ -111,7 +112,7 @@ public class GameplayScreen extends Pantalla{
         _stage.addActor(_sign);
         
         //Seteando controladores para la entrada del usuario
-        _controler = new VirtualControler();
+        
         _keyboardInput = new ShipKeyboardInput(_controler);
         _touchInput = new ShipTouchInput(_controler);
         _multiplexer = new InputMultiplexer();
@@ -159,7 +160,7 @@ public class GameplayScreen extends Pantalla{
         _game.batch.end();
     
         
-        if(spawnAsteroids && _asteroidSpawn.getContadorSpawning() > 0.5f)
+        if(spawnAsteroids && _asteroidSpawn.getContadorSpawning() > 0.3f)
         {
             _asteroidSpawn.SpawnAsteroid();
             _asteroidSpawn.setContadorSpawning(0);
@@ -224,16 +225,17 @@ public class GameplayScreen extends Pantalla{
     
     public void ProcesarEntrada()
     {
-         if(_controler.isIsPressed() && _player.isTouched())
+         if( _player.isTouched() && _player.isDragged())
         {
+            
+            _player.setDragged(false);
             _player.setX( _controler.getNewX() - _player.getWidth() / 2);
             _player.setY( (Gdx.graphics.getHeight() - _controler.getNewY()) - _player.getHeight() / 2 );
             _player.getbBox().x = _player.getX();
             _player.getbBox().y = _player.getY();
             _player.getbBox().height = _player.getHeight();
             _player.getbBox().width = _player.getWidth();
-            _controler.setIsPressed(false);
-            
+                     
         }
         if(_controler.isDownMovement()){_player.MoveDown(); }   
         if(_controler.isUpMovement()){_player.MoveUp();}

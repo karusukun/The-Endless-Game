@@ -69,9 +69,7 @@ public class SignAnimation  extends Actor {
             
             pBatch.draw(_region,getX(),getY(),getOriginX(),
                       getOriginY(),getWidth(),getHeight(),
-                      getScaleX(),getScaleY(),getRotation());
-            System.out.println("post draw");
-                
+                      getScaleX(),getScaleY(),getRotation());          
         }
         catch(Exception e){
             

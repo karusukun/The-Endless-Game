@@ -20,6 +20,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.gdx.EndlessGame.GameplayScreen;
 import com.gdx.EndlessGame.Main;
+import logic.VirtualControler;
 
 /**
  *
@@ -27,12 +28,16 @@ import com.gdx.EndlessGame.Main;
  */
 public class PlayerVehicle extends Vehicle 
 {
-    private boolean _touched;
+    private boolean _touched, _dragged;
     private Rectangle _bBox;
+    private VirtualControler _controler;
+    public boolean _touchdown;
     
-    public PlayerVehicle()
+    public PlayerVehicle(VirtualControler pControler)
     {
        _touched = false; 
+       _dragged = false;
+       _controler = pControler;
        this._type = ElementType.PLAYER_VEHICLE;
        this._region = new TextureRegion( Main.MANAGER.get("playerShip2_blue.png", Texture.class), 112,75);
        System.out.println(GameplayScreen.getScene().getViewport().getViewportWidth()/2);
@@ -46,18 +51,46 @@ public class PlayerVehicle extends Vehicle
        
          addListener(new InputListener() {
             
+             
+             
+             
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) 
             {
+                System.out.println("entro a up");
                 setTouched(false);
             }
-
+     
+         });
+         
+          addListener(new InputListener() {
+              
           
              public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) 
              {
-                setTouched(true);
+                 System.out.println("entro a down");
+                _touchdown = true;
+                //setTouched(true);
                 return false;            
              }
-         });
+          
+          });
+          addListener(new InputListener() {
+              public boolean touchDragged(int pScreenX, int pScreenY, int pPointer) {
+                try{
+                if(isTouched() && GameplayScreen.getFireButton().isTouched() == false)
+                {
+                    System.out.println("entro a dragged");
+                    setDragged(true);
+                    _controler.setNewX(pScreenX);
+                    _controler.setNewY(pScreenY);
+                }
+                return false;
+                }catch(Exception e){
+                    System.out.println(e.toString());
+                    return false;
+                }
+            }
+          });
        
     }
 
@@ -209,6 +242,16 @@ public class PlayerVehicle extends Vehicle
     public Rectangle getbBox() {
         return _bBox;
     }
+
+    public boolean isDragged() {
+        return _dragged;
+    }
+
+    public void setDragged(boolean _dragged) {
+        this._dragged = _dragged;
+    }
+
+    
     
     
     
