@@ -53,6 +53,7 @@ public class GameplayScreen extends Pantalla{
     private AsteroidSpawner _asteroidSpawn;
     private EnemySpawner _enemySpawner;
     private IntersectionSpawner _interSpawner;
+    private SignAnimation _sign;
     
     //Elements of the game management
     private  Array<EnemyVehicle> _enemies;
@@ -89,13 +90,15 @@ public class GameplayScreen extends Pantalla{
         _fireButton = new ShootingPad(_controler);
         _background = new BackgroundAnimation();
         _background.setPosition(0, _stage.getHeight());
+        _sign = new SignAnimation(GraphAlgorithms.getInstance().wasNodeVisited(_graph),(int)_user.getPoints(), 
+                String.valueOf(_graph.getLevel())+ String.valueOf( _graph.getSeed()));
     
         _asteroidSpawn = new AsteroidSpawner(_stage);
         _enemySpawner = new EnemySpawner(_stage,_enemies);
         
         GraphAlgorithms.getInstance().generateIntersections(_graph);
         
-        
+        System.out.println(_graph.getNodesList().size());
         _interSpawner = new IntersectionSpawner(_stage, _graph.getNodesList().size(),GraphAlgorithms.getInstance().getRecommendedPath(_graph),_intersections, _weapons);
             
         //Agregando actores al stage
@@ -104,6 +107,7 @@ public class GameplayScreen extends Pantalla{
         _player.getbBox().y = _player.getY();
         _stage.addActor(_fireButton);
         _stage.addActor(_background);
+        _stage.addActor(_sign);
         
         //Seteando controladores para la entrada del usuario
         _controler = new VirtualControler();

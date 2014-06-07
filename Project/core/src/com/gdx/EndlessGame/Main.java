@@ -101,6 +101,7 @@ public void LoadAssets()
     MANAGER.load("Power-ups/bolt_silver.png",Texture.class);
     MANAGER.load("Power-ups/bolt_bronze.png",Texture.class);
     MANAGER.load("Power-ups/bolt_gold.png",Texture.class);
+    MANAGER.load("sign.png", Texture.class);
     
     //loading misc
     MANAGER.load("Meteors/meteorBrown_big1.png", Texture.class);

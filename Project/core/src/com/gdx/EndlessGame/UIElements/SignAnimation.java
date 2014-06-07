@@ -6,10 +6,52 @@
 
 package com.gdx.EndlessGame.UIElements;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.gdx.EndlessGame.GameplayScreen;
+import com.gdx.EndlessGame.Main;
+
 /**
  *
  * @author Karusu
  */
-public class SignAnimation {
+public class SignAnimation  extends Actor {
+    
+     private float _duration = 1.0f;
+     private TextureRegion _region;
+     
+     
+     public SignAnimation(boolean Visited, int Score, String numeroInter)
+     {
+         _duration = 0;
+         Texture tempText = Main.MANAGER.get("sign.png", Texture.class);
+         _region = new TextureRegion(tempText,0,0,tempText.getWidth(),tempText.getHeight());
+         setPosition(0, 0);
+        
+     }
+
+    @Override
+    public void act(float delta) {
+        _duration -= delta;
+            if(_duration < 0)
+                this.remove();
+    }
+     
+     
+
+    @Override
+    public void draw(Batch pBatch, float pParentAlpha) {
+        try{
+        
+        pBatch.setColor(1.0f, 1.0f, 1.0f, _duration);
+        pBatch.draw(_region, getX(), getY());
+        }catch(Exception e){
+            System.out.println(e.toString());
+        }
+    }
     
 }
