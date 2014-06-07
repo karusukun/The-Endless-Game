@@ -144,6 +144,7 @@ public class GameplayScreen extends Pantalla{
         TextureRegion frame = _background._background.getKeyFrame(duracion, true);
         _game.batch.begin();
         _game.batch.draw(frame, 0, 0);
+        _sign.draw(_stage.getBatch(), f);
         _game.batch.end();
     
         
@@ -335,16 +336,21 @@ public class GameplayScreen extends Pantalla{
         Intersection inter;
         for(int position = 0; position < _intersections.size; position++)
         {
-            if(GraphAlgorithms.getInstance().wasNodeVisited(_graph))
-                _user.setPoints(_user.getPoints() + 1);
-            else
-                _user.setPoints(_user.getPoints() + 3);
             
             inter = _intersections.get(position);
             if(inter.getbBox().overlaps(_player.getbBox())){
+                
+                if(GraphAlgorithms.getInstance().wasNodeVisited(_graph)){
+                _user.setPoints(_user.getPoints() + 1);
+                }
+                else{
+                _user.setPoints(_user.getPoints() + 3);
+                }
+                
                 nextStage = true;
                 if(_graph.getNodesList().isEmpty())
                     GraphAlgorithms.getInstance().generateIntersections(_graph);
+                
                 _graph = _graph.getNodesList().get(position);
                 System.out.println(_graph.getSeed());
                 Main.mixer.PlaySfxNextStage();
