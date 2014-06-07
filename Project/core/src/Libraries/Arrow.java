@@ -21,12 +21,12 @@ public class Arrow extends Actor{
     
     private TextureRegion _region;
     
-    public Arrow(Texture pImage, int x, int y) {
+    public Arrow(Texture pImage, int pX, int pY) {
         
         _region = new TextureRegion(pImage,0, 0, pImage.getWidth(), pImage.getWidth());
         setSize(64, 64);
         setBounds(0, 0, getWidth(), getHeight());
-        setPosition(x, y);
+        setPosition(pX, pY);
     }
 
     @Override
