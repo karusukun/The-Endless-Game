@@ -17,10 +17,12 @@ import logic.GraphAlgorithms;
 
 
 public class Main extends Game {
-	public static SpriteBatch batch;
+	
+    public static SpriteBatch batch;
         public static OrthographicCamera camera;
         private int _gameHeight;
         private int _gameWidth;
+        private Stage _scene;
         public static AssetManager MANAGER;
         public static SoundMixer mixer;
         private Node _graph;
@@ -36,18 +38,20 @@ public class Main extends Game {
 	public void create () {
 		batch = new SpriteBatch();
                 mixer = new SoundMixer();
+                _scene = new Stage();
                 _gameHeight = Gdx.graphics.getHeight();
                 _gameWidth = Gdx.graphics.getWidth();
                 camera = new OrthographicCamera(_gameWidth, _gameHeight);
                 camera.translate(_gameWidth /2, _gameHeight/2);
                 camera.update();
+                _scene.getViewport().setCamera(camera);
                 
                 //Grafo
                 _graph = GraphAlgorithms.getInstance().getInitialNode();
                 
                 //Creacion de las pantallas
                 _loadingScreen = new LoadingScreen(this);
-                _menuScreen = new MenuScreen(this);
+                _menuScreen = new MenuScreen(this, _scene);
                 _player = new Player();
                 _gameplayScreen = new GameplayScreen(this, _player, _graph);
                 _gameOverScreen = new GameOverScreen(this);
@@ -103,8 +107,8 @@ public void LoadAssets()
     MANAGER.load("Power-ups/bolt_gold.png",Texture.class);
     MANAGER.load("sign.png", Texture.class);
     MANAGER.load("gameover.png",Texture.class);
-    MANAGER.load("",Texture.class);
-    MANAGER.load("",Texture.class);
+    MANAGER.load("quit.png",Texture.class);
+    MANAGER.load("start.png",Texture.class);
     
     //loading misc
     MANAGER.load("Meteors/meteorBrown_big1.png", Texture.class);

@@ -53,8 +53,8 @@ public class SoundMixer {
     public void PlayGameOverM(boolean pIsLooping)
     {
         try{
-        _HeavyEnd.setLooping(pIsLooping);
-        _gamePlayMusic.play();  
+        _Space.setLooping(pIsLooping);
+        _Space.play();  
         }catch(Exception e){
             System.out.println(e.toString());
         }
@@ -77,7 +77,7 @@ public class SoundMixer {
     
     public void StopGameOverM(boolean pIsLooping)
     {
-        this._HeavyEnd.stop();
+        this._Space.stop();
     }
     
     public void StopGamePMusic()

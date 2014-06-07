@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.gdx.EndlessGame.GameplayScreen;
 import com.gdx.EndlessGame.Main;
 import logic.VirtualControler;
@@ -24,12 +25,38 @@ public class Button extends Actor{
     
     private TextureRegion _button;
     private boolean _touched;
+    private int _type;
     
-    public Button(Main pGame)
+    public Button(Stage scene, int type)
     {
-        Texture tempText = Main.MANAGER.get("btnShooting.png", Texture.class);
-        _button = new TextureRegion(tempText,0,0,64,64);
-        setPosition(GameplayScreen.getScene().getWidth() - 70, GameplayScreen.getScene().getHeight() / 2);
+        Texture tempText;
+        int posX,posY;
+        posX = posY = 0;
+        switch(type)
+        {
+            case 0:
+                tempText = Main.MANAGER.get("gameover.png", Texture.class);
+                
+                break;
+            case 1:
+                tempText = Main.MANAGER.get("start.png", Texture.class);
+                posX = scene.getViewport().getViewportWidth()/ 2 - 100;
+                System.out.println(scene.getViewport().getViewportHeight());
+                posY = scene.getViewport().getViewportHeight() - 200;
+                break;
+            case 2:
+                tempText = Main.MANAGER.get("quit.png", Texture.class);
+                posX = scene.getViewport().getViewportWidth() / 2 - 100;
+                posY = scene.getViewport().getViewportHeight() - 400;
+                break;
+            default:
+                tempText = null;
+        }
+        
+        
+        _button = new TextureRegion(tempText,0,0,tempText.getWidth(),tempText.getHeight());
+        
+        setPosition(posX, posY);
         setSize(tempText.getWidth(),tempText.getHeight());
         _touched = false;
         

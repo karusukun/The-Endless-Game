@@ -6,8 +6,10 @@
 
 package com.gdx.EndlessGame;
 
+import Libraries.Button;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 
 /**
  *
@@ -15,17 +17,25 @@ import com.badlogic.gdx.graphics.GL20;
  */
 public class MenuScreen extends Pantalla {
 
-    private boolean _Start,_exit;
+    private Button _buttonPlay,_buttonExit;
+    private Stage _scene;
     
-    public MenuScreen(Main pGame) {
+    public MenuScreen(Main pGame,Stage pScene) {
         super(pGame);
-        _Start = _exit = false;
+        _scene = pScene;
     }
 
     @Override
     public void show() {
         
-         Main.mixer.PlayMenuMusic(_exit);
+        _buttonPlay = new Button(_scene, 1);
+        _buttonExit = new Button(_scene, 2);
+        
+        _scene.addActor(_buttonPlay);
+        _scene.addActor(_buttonExit);
+        
+         Main.mixer.PlayMenuMusic(true);
+          Gdx.input.setInputProcessor(_scene);
     }
 
     @Override
@@ -65,15 +75,17 @@ public class MenuScreen extends Pantalla {
         
         _game.batch.end();
         
-        if(_Start)
+        _scene.act();
+        _scene.draw();
+        if(_buttonPlay.isTouched())
         {
             
-         _game.setScreen(_game._gameplayScreen);
-         _game.getPlayer().GenerateFirstWeapon();
-         Main.mixer.StopMenuMusic(_exit);
+            _game.setScreen(_game._gameplayScreen);
+            _game.getPlayer().GenerateFirstWeapon();
+            Main.mixer.StopMenuMusic(false);
         }
-        if(_exit)
-            _game.dispose();
+        if(_buttonExit.isTouched())
+            Gdx.app.exit();
         
     }
     

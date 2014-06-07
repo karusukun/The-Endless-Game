@@ -79,6 +79,7 @@ public class GameplayScreen extends Pantalla{
     @Override
     public void show() {
         
+        Main.mixer.PlayGamePMusic(true);
         _controler = new VirtualControler();
         //Seteando el jugador
         _player = new PlayerVehicle(_controler);
@@ -185,6 +186,7 @@ public class GameplayScreen extends Pantalla{
         if(gameOver)
         {
             this._game.setScreen(_game._gameOverScreen);
+            Main.mixer.StopGamePMusic();
             this.dispose();
         }
         if(nextStage)
