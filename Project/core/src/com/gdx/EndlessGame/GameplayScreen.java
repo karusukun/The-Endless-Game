@@ -57,9 +57,9 @@ public class GameplayScreen extends Pantalla{
     private  Array<EnemyVehicle> _enemies;
     private  Array<Intersection> _intersections;
     private Array<Bullet> _bullets;
-    private Graph _graph;
+    private Node _graph;
     
-    public GameplayScreen(Main pGame, Player pPlayer, Graph pGraph) {
+    public GameplayScreen(Main pGame, Player pPlayer, Node pGraph) {
         super(pGame);
         //Seteando el stage
         duracion = 0;
@@ -89,7 +89,8 @@ public class GameplayScreen extends Pantalla{
     
         _asteroidSpawn = new AsteroidSpawner(_stage);
         _enemySpawner = new EnemySpawner(_stage,_enemies);
-        _interSpawner = new IntersectionSpawner(_stage, 3,_intersections);
+        
+        _interSpawner = new IntersectionSpawner(_stage, _graph.getNodesList().size(),_intersections);
             
         //Agregando actores al stage
         _stage.addActor(_player);

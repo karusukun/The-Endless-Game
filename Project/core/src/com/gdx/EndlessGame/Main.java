@@ -1,5 +1,6 @@
 package com.gdx.EndlessGame;
 
+import Libraries.Node;
 import Libraries.Player;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.ApplicationAdapter;
@@ -11,6 +12,7 @@ import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.gdx.EndlessGame.UIElements.SoundMixer;
+import logic.GraphAlgorithms;
 
 
 
@@ -21,6 +23,7 @@ public class Main extends Game {
         private int _gameWidth;
         public static AssetManager MANAGER;
         public static SoundMixer mixer;
+        private Node _graph;
        
         private Player _player;
         
@@ -39,11 +42,14 @@ public class Main extends Game {
                 camera.translate(_gameWidth /2, _gameHeight/2);
                 camera.update();
                 
+                //Grafo
+                _graph = GraphAlgorithms.getInstance().getInitialNode();
+                
                 //Creacion de las pantallas
                 _loadingScreen = new LoadingScreen(this);
                 _menuScreen = new MenuScreen(this);
                 _player = new Player();
-                _gameplayScreen = new GameplayScreen(this, _player, null);
+                _gameplayScreen = new GameplayScreen(this, _player, _graph);
                 _gameOverScreen = new GameOverScreen(this);
                 
                 MANAGER = new AssetManager();                   
