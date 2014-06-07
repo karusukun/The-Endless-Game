@@ -193,7 +193,7 @@ public class GameplayScreen extends Pantalla{
         }
         
         _stage.draw();
-        ProcesarEntrada();
+        processInput();
     }
 
     @Override
@@ -223,7 +223,7 @@ public class GameplayScreen extends Pantalla{
     public void resize(int i, int i1) {
     }
     
-    public void ProcesarEntrada()
+    public void processInput()
     {
          if( _player.isTouched() && _player.isDragged())
         {
@@ -241,18 +241,22 @@ public class GameplayScreen extends Pantalla{
         if(_controler.isUpMovement()){_player.MoveUp();}
         if(_controler.isLeftMovement()){_player.MoveLeft();}
         if(_controler.isRightMovement()){_player.MoveRight();}
-        if ((_controler.isFireGun() || _fireButton.isTouched()) && _player.getRemainingShots() > 0 )
-        {
-             Bullet bullet = new Bullet(1, (int)_player.getX()+20,(int)_player.getY() + (int)_player.getHeight() + 30, _user.getWeapon().getBeamThickness());
-             _bullets.add(bullet);
-             _stage.addActor(bullet);
-             bullet.getbBox().x = bullet.getX();
-             bullet.getbBox().y = bullet.getY();
-             _controler.setFireGun(false);
-             _fireButton.setTouched(false);
-             _player.setRemainingShots(_player.getRemainingShots() -1);
-             Main.mixer.PlaySfxLaser();
+        if ((_controler.isFireGun() || _fireButton.isTouched())){
+            _fireButton.setTouched(false);
+            if (_player.getRemainingShots() > 0)
+            {
+                 Bullet bullet = new Bullet(1, (int)_player.getX()+20,(int)_player.getY() + (int)_player.getHeight() + 30, _user.getWeapon().getBeamThickness());
+                 _bullets.add(bullet);
+                 _stage.addActor(bullet);
+                 bullet.getbBox().x = bullet.getX();
+                 bullet.getbBox().y = bullet.getY();
+                 _controler.setFireGun(false);
+                 // Lo movimos arriba_fireButton.setTouched(false);
+                 _player.setRemainingShots(_player.getRemainingShots() -1);
+                 Main.mixer.PlaySfxLaser();
+            }
         }
+        
          
       
     }

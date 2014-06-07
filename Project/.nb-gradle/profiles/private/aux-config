@@ -8,7 +8,11 @@
     </open-files>
     <editor-bookmarks lastBookmarkId="0" xmlns="http://www.netbeans.org/ns/editor-bookmarks/2"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-      <group/>
+      <group>
+        <file>file:/C:/Users/Nicolas/Documents/GitHub/The-Endless-Game/Project/core/src/com/gdx/EndlessGame/InputHandler/ShipTouchInput.java</file>
+        <file>file:/C:/Users/Nicolas/Documents/GitHub/The-Endless-Game/Project/core/src/Libraries/PlayerVehicle.java</file>
+        <file>file:/C:/Users/Nicolas/Documents/GitHub/The-Endless-Game/Project/core/src/com/gdx/EndlessGame/GameplayScreen.java</file>
+      </group>
     </open-files>
   </auxiliary>
 </gradle-project-properties>

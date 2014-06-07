@@ -70,7 +70,7 @@ public class LoadingScreen extends Pantalla{
     }
 
     @Override
-    public void render(float f) 
+    public void render(float pF) 
     {
         Gdx.gl.glClearColor( 1f, 1f, 1f, 0.5f );
         Gdx.gl.glClear( GL20.GL_COLOR_BUFFER_BIT );

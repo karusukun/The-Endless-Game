@@ -44,6 +44,7 @@ public class ShipTouchInput extends InputAdapter {
     public boolean touchUp(int pScreenX, int pScreenY, int pPointer, int pButton) {
         try{
             
+            GameplayScreen.getPlayer().setTouched(false);
             
             if(GameplayScreen.getPlayer()._touchdown)
             {

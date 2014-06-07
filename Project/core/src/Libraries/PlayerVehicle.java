@@ -65,10 +65,11 @@ public class PlayerVehicle extends Vehicle
           addListener(new InputListener() {
               
           
-             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) 
+             public boolean touchDown(InputEvent event, float x, float y, int pPointer, int bButton) 
              {
                  System.out.println("entro a down");
-                _touchdown = true;
+                _touchdown = true;// se deja?
+                _touched = true;
                 //setTouched(true);
                 return false;            
              }

@@ -23,19 +23,19 @@ public class Intersection extends Actor {
      private TextureRegion _region;
      private Rectangle _bBox;
     
-    public Intersection(Texture pImage, int x, int Width) {
+    public Intersection(Texture pImage, int pX, int pWidth) {
         
         _region = new TextureRegion(pImage,0, 0, pImage.getWidth(), pImage.getWidth());        
-        setBounds(0, 0, getWidth(), Width);
-        setSize(Width, pImage.getHeight());
-        setPosition(x, GameplayScreen.getScene().getHeight());
-        _bBox = new Rectangle(getX(), getY(), Width, getHeight());
+        setBounds(0, 0, getWidth(), pWidth);
+        setSize(pWidth, pImage.getHeight());
+        setPosition(pX, GameplayScreen.getScene().getHeight());
+        _bBox = new Rectangle(getX(), getY(), pWidth, getHeight());
     }
 
     @Override
-    public void act(float delta) {
+    public void act(float pDelta) {
         try{
-            float newPos = getY() - 120 * delta;
+            float newPos = getY() - 120 * pDelta;
             if(newPos < GameplayScreen.getScene().getHeight() - getHeight())
             {
                 setY(getY());
@@ -73,10 +73,10 @@ public class Intersection extends Actor {
         
     
     @Override
-    public void draw(Batch batch, float parentAlpha) 
+    public void draw(Batch pBatch, float parentAlpha) 
     {
          //To change body of generated methods, choose Tools | Templates.
-        batch.draw(_region,getX(),getY(),getOriginX(),
+        pBatch.draw(_region,getX(),getY(),getOriginX(),
                 getOriginY(),getWidth(),getHeight(),
                 getScaleX(),getScaleY(),getRotation());
                
