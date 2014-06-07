@@ -32,32 +32,44 @@ public class Asteroid extends GameElement{
     }
 
     @Override
-    public void act(float delta) {
-           
-        float newPos = getY() - 200 * delta;
-        if(newPos < 0)
-            this.remove();
-        setY(newPos);
-        toBack();
-        
-        rotateBy(0.3f);
+    public void act(float pDelta) {
+        try{
+            float newPos = getY() - 200 * pDelta;
+            if(newPos < 0)
+                this.remove();
+            setY(newPos);
+            toBack();
+
+            rotateBy(0.3f);
+        }catch(Exception e){
+            System.out.println(e.toString());
+        }
        
     }
 
     @Override
-    public Actor hit(float x, float y, boolean touchable) {
-        return super.hit(x, y, touchable); //To change body of generated methods, choose Tools | Templates.
+    public Actor hit(float pX, float pY, boolean pTouchable) {
+        try{
+            return super.hit(pX, pY, pTouchable); //To change body of generated methods, choose Tools | Templates.
+        }catch(Exception e){
+            System.out.println(e.toString());
+            return new Actor();
+            // Tal vez deberia retornar null
+        }
     }
         
     
     @Override
-    public void draw(Batch batch, float parentAlpha) 
+    public void draw(Batch pBatch, float pParentAlpha) 
     {
-         //To change body of generated methods, choose Tools | Templates.
-        batch.draw(_region,getX(),getY(),getOriginX(),
-                getOriginY(),getWidth(),getHeight(),
-                getScaleX(),getScaleY(),getRotation());
-               
+        try{
+            //To change body of generated methods, choose Tools | Templates.
+            pBatch.draw(_region,getX(),getY(),getOriginX(),
+                       getOriginY(),getWidth(),getHeight(),
+                       getScaleX(),getScaleY(),getRotation());
+        }catch(Exception e){
+            System.out.println(e.toString());
+        }
     }
     
     

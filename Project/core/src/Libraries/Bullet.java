@@ -53,36 +53,49 @@ public class Bullet extends GameElement{
     }
 
     @Override
-    public void act(float delta) {
-           
-        _indexText++;
-        if(_indexText > _textures.size-1)
-            _indexText = 0;
-        
-        float newPos = getY() + (650* _direction) * delta;
-        setY(newPos);
-        _bBox.x = getX();
-        _bBox.y = getY();
-        _bBox.height = getHeight();
-        _bBox.width = getWidth();
-        toBack();
-        _actualText = _textures.get(_indexText);
-        _region = new TextureRegion(_actualText,0, 0, _actualText.getWidth(), _actualText.getWidth());
+    public void act(float pDelta) {
+        try{
+            _indexText++;
+            if(_indexText > _textures.size-1)
+                _indexText = 0;
+
+            float newPos = getY() + (650* _direction) * pDelta;
+            setY(newPos);
+            _bBox.x = getX();
+            _bBox.y = getY();
+            _bBox.height = getHeight();
+            _bBox.width = getWidth();
+            toBack();
+            _actualText = _textures.get(_indexText);
+            _region = new TextureRegion(_actualText,0, 0, _actualText.getWidth(), _actualText.getWidth());
+        }catch(Exception e){
+            System.out.println(e.toString());
+        }
     }
 
     @Override
-    public Actor hit(float x, float y, boolean touchable) {
-        return super.hit(x, y, touchable); //To change body of generated methods, choose Tools | Templates.
+    public Actor hit(float pX, float pY, boolean pTouchable) {
+        try{
+            return super.hit(pX, pY, pTouchable); //To change body of generated methods, choose Tools | Templates.
+        }catch(Exception e){
+            System.out.println(e.toString());
+            return new Actor();
+            // Tal vez deberia retornar null
+        }
     }
         
     
     @Override
-    public void draw(Batch batch, float parentAlpha) 
+    public void draw(Batch pBatch, float pParentAlpha) 
     {
-         //To change body of generated methods, choose Tools | Templates.
-        batch.draw(_region,getX(),getY(),getOriginX(),
-                getOriginY(),getWidth(),getHeight(),
-                getScaleX(),getScaleY(),getRotation());
+        try{
+            //To change body of generated methods, choose Tools | Templates.
+            pBatch.draw(_region,getX(),getY(),getOriginX(),
+                      getOriginY(),getWidth(),getHeight(),
+                      getScaleX(),getScaleY(),getRotation());
+        }catch(Exception e){
+            System.out.println(e.toString());
+        }
                
     }
     

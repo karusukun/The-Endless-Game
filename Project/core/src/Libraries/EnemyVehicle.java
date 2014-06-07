@@ -29,7 +29,9 @@ public class EnemyVehicle extends Vehicle {
     private boolean _shooting;
     private int _remainingShots;
     
-    public EnemyVehicle(Texture pTexture, int x)
+    private static final int POS_MODIFIER = 125;
+    
+    public EnemyVehicle(Texture pTexture, int pX)
     {
         this._type = ElementType.ENEMY_VEHICLE;    
         _life = _remainingShots = 1;
@@ -38,21 +40,27 @@ public class EnemyVehicle extends Vehicle {
         _region = new TextureRegion(pTexture,0,0,pTexture.getWidth(), pTexture.getHeight());
         setSize(50, 50);
         setBounds(0, 0, getWidth(), getHeight());
-        setPosition(x , GameplayScreen.getScene().getHeight());
+        setPosition(pX , GameplayScreen.getScene().getHeight());
         _bBox = new Rectangle(getX(),getY(), getWidth(), getHeight());
         
                   
     }
 
     @Override
-    public Actor hit(float x, float y, boolean touchable) {
-        return super.hit(x, y, touchable); //To change body of generated methods, choose Tools | Templates.
+    public Actor hit(float pX, float pY, boolean pTouchable) {
+        try{
+            return super.hit(pX, pY, pTouchable); //To change body of generated methods, choose Tools | Templates.
+        }catch(Exception e){
+            System.out.println(e.toString());
+            return new Actor();
+            // Tal vez deberia retornar null
+        }
     }
 
     @Override
-    public void act(float delta) {
-        
-        float newPos = getY() - 125 * delta;                    
+    public void act(float pDelta) {
+        try{
+        float newPos = getY() - POS_MODIFIER * pDelta;                    
         setY(newPos);
         _bBox.x = getX();
         _bBox.y = getY();
@@ -68,6 +76,9 @@ public class EnemyVehicle extends Vehicle {
             _shooting = true;
             _remainingShots -=1;
         }
+        }catch(Exception e){
+            System.out.println(e.toString());
+        }
     }
     
         
@@ -75,10 +86,14 @@ public class EnemyVehicle extends Vehicle {
     @Override
     public void draw(Batch batch, float parentAlpha) 
     {
+        try{
          //To change body of generated methods, choose Tools | Templates.
         batch.draw(_region,getX(),getY(),getOriginX(),
                 getOriginY(),getWidth(),getHeight(),
                 getScaleX(),getScaleY(),getRotation());
+        }catch(Exception e){
+            System.out.println(e.toString());
+        }
                 
     }
 

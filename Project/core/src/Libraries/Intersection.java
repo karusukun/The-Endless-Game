@@ -34,32 +34,41 @@ public class Intersection extends Actor {
 
     @Override
     public void act(float delta) {
-        
-        float newPos = getY() - 120 * delta;
-        if(newPos < GameplayScreen.getScene().getHeight() - getHeight())
-        {
-            setY(getY());
-            _bBox.x = getX();
-            _bBox.y = getY();
-            _bBox.height = getHeight();
-            _bBox.width = getWidth();
-        }    
-        else
-        {
-            setY(newPos);
-            _bBox.x = getX();
-            _bBox.y = getY();
-            _bBox.height = getHeight();
-            _bBox.width = getWidth();
+        try{
+            float newPos = getY() - 120 * delta;
+            if(newPos < GameplayScreen.getScene().getHeight() - getHeight())
+            {
+                setY(getY());
+                _bBox.x = getX();
+                _bBox.y = getY();
+                _bBox.height = getHeight();
+                _bBox.width = getWidth();
+            }    
+            else
+            {
+                setY(newPos);
+                _bBox.x = getX();
+                _bBox.y = getY();
+                _bBox.height = getHeight();
+                _bBox.width = getWidth();
+            }
+            toBack();
+        }catch(Exception e){
+            System.out.println(e.toString());
         }
-        toBack();
         
        
     }
 
     @Override
-    public Actor hit(float x, float y, boolean touchable) {
-        return super.hit(x, y, touchable); //To change body of generated methods, choose Tools | Templates.
+    public Actor hit(float pX, float pY, boolean pTouchable) {
+        try{
+            return super.hit(pX, pY, pTouchable); //To change body of generated methods, choose Tools | Templates.
+        }catch(Exception e){
+            System.out.println(e.toString());
+            return new Actor();
+            // Tal vez deberia retornar null
+        }
     }
         
     
