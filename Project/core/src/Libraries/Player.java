@@ -14,14 +14,10 @@ import com.badlogic.gdx.graphics.Color;
  */
 public class Player {
     
-    private Player()
+    public Player()
     {
         this._lifes = 3;
         this._points = 0;
-        this._vehicle = new PlayerVehicle();
-        _vehicle.setSpeed(5);
-        _vehicle.setRemainingShots(2);
-        _vehicle.setActualWeapon(new Weapon(Color.BLACK, (long)50));
     }
     
     public synchronized static Player getInstance()

@@ -42,7 +42,7 @@ public class Main extends Game {
                 //Creacion de las pantallas
                 _loadingScreen = new LoadingScreen(this);
                 _menuScreen = new MenuScreen(this);
-                //_player = new ;
+                _player = new Player();
                 _gameplayScreen = new GameplayScreen(this, _player, null);
                 _gameOverScreen = new GameOverScreen(this);
                 
