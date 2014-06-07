@@ -14,9 +14,11 @@ import com.badlogic.gdx.graphics.Color;
  */
 public class Player {
     
+    private static final int NUMBER_OF_LIVES  = 0;
+    
     public Player()
     {
-        this._lifes = 3;
+        this._lifes = NUMBER_OF_LIVES;
         this._points = 0;
         
     }

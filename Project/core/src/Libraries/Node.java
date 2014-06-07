@@ -15,20 +15,15 @@ import java.util.ArrayList;
 public class Node {
     
     private boolean _visited;
-    //private Road _road;
     private double _seed;
-    //private int _meter;
     private int _level;
     private ArrayList<Node> _NodesList;
-    //private Node _next; //For the hashTable
     
     public Node(double pSeed, int pLevel){
         this._visited = false;
         this._seed = pSeed;
-        //this._meter = pMeter;
         this._level = pLevel;
         this._NodesList = new ArrayList<Node>();
-        //this._next = null;
     }
     
     
@@ -64,17 +59,5 @@ public class Node {
     public void setNodesList(ArrayList<Node> _NodesList) {
         this._NodesList = _NodesList;
     }
-
-    /*public Node getNext() {
-        return _next;
-    }
-
-    public void setNext(Node _next) {
-        this._next = _next;
-    }
-    */
-    
-    
-    
     
 }

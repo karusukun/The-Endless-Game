@@ -22,6 +22,7 @@ public class GraphAlgorithms {
     private ArrayList<Node> _VisitedList; // Dejaremos el tamano maximo en 30
     
     private static final int PROBABILITY_TO_RECOMMEND = 40;
+    private static final int LIST_MAX_SIZE = 30;
     
     protected GraphAlgorithms(){
         //_nodosHash = new HashTable();
@@ -54,7 +55,7 @@ public class GraphAlgorithms {
             }
             // Si llega aqui es porque es un camino nuevo
             // Osea que el noddo anterior no estaba en la lista, y tampoco este ha sido visitado
-            if(_VisitedList.size() < 30){
+            if(_VisitedList.size() < LIST_MAX_SIZE){
                 _VisitedList.add(pNode);
             }else{
                 Random random = new Random();
@@ -62,7 +63,7 @@ public class GraphAlgorithms {
                 _VisitedList.remove(randNumber);
                 _VisitedList.add(pNode);
             }
-
+            pNode.setNodesList(new ArrayList<Node>());
             return false;
         }catch(Exception e){
             e.printStackTrace();

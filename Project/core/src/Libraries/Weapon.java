@@ -39,22 +39,22 @@ public class Weapon extends GameElement {
     
     public Weapon(Color pColor, long pGen)
     {
-        _images = new Array<Texture>();
-        _images.add(new Texture(("Power-ups/bolt_silver.png")));
-        _images.add(new Texture(("Power-ups/bolt_bronze.png")));
-        _images.add(new Texture(("Power-ups/bolt_gold.png")));
-        _region = new TextureRegion(_images.get(0), 0, 0, _images.get(0).getWidth(), _images.get(0).getHeight());
-        setSize(50, 50);
-        setBounds(0, 0, getWidth(), getHeight());
-        setPosition(MathUtils.random(80, GameplayScreen.getScene().getWidth() - 80), GameplayScreen.getScene().getHeight() - 150 );
-        _bBox = new Rectangle(getX(),getY(), getWidth(), getHeight());
-        _indexImgs = 0;
-        
-        this._binaryIdentifier = pGen;
-        this._color = pColor;
-        _laneRange = 0;
-        _beamThickness = 0;
-        _shootingShape = null;
+            _images = new Array<Texture>();
+            _images.add(new Texture(("Power-ups/bolt_silver.png")));
+            _images.add(new Texture(("Power-ups/bolt_bronze.png")));
+            _images.add(new Texture(("Power-ups/bolt_gold.png")));
+            _region = new TextureRegion(_images.get(0), 0, 0, _images.get(0).getWidth(), _images.get(0).getHeight());
+            setSize(50, 50);
+            setBounds(0, 0, getWidth(), getHeight());
+            setPosition(MathUtils.random(80, GameplayScreen.getScene().getWidth() - 80), GameplayScreen.getScene().getHeight() - 150 );
+            _bBox = new Rectangle(getX(),getY(), getWidth(), getHeight());
+            _indexImgs = 0;
+
+            this._binaryIdentifier = pGen;
+            this._color = pColor;
+            _laneRange = 0;
+            _beamThickness = 0;
+            _shootingShape = null;
     }
     
     public Weapon(int pLaneRange, Color pColor, int pBeamThickness, Polygon pShape){
@@ -92,11 +92,16 @@ public class Weapon extends GameElement {
     }
     
     public static Weapon randomWeapon(){
+        try{
         Random random = new Random();
         long binary = Math.abs(random.nextLong());
         
         Weapon weapon = WeaponLogic.longToWeapon(binary);
         return weapon;
+        }catch(Exception e){
+            System.out.println(e.toString());
+            return null;
+        }
     }
     
     
