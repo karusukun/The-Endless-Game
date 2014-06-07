@@ -34,16 +34,16 @@ public class VirtualControler {
         return _isPressed;
     }
 
-    public void setLeftMovement(boolean _leftMovement) {
-        this._leftMovement = _leftMovement;
+    public void setLeftMovement(boolean pLeftMovement) {
+        this._leftMovement = pLeftMovement;
     }
 
-    public void setRightMovement(boolean _rightMovement) {
-        this._rightMovement = _rightMovement;
+    public void setRightMovement(boolean pRightMovement) {
+        this._rightMovement = pRightMovement;
     }
 
-    public void setIsPressed(boolean _isPressed) {
-        this._isPressed = _isPressed;
+    public void setIsPressed(boolean pIsPressed) {
+        this._isPressed = pIsPressed;
     }
 
     public boolean isUpMovement() {
@@ -58,16 +58,16 @@ public class VirtualControler {
         return _fireGun;
     }
 
-    public void setUpMovement(boolean _upMovement) {
-        this._upMovement = _upMovement;
+    public void setUpMovement(boolean pUpMovement) {
+        this._upMovement = pUpMovement;
     }
 
-    public void setDownMovement(boolean _downMovement) {
-        this._downMovement = _downMovement;
+    public void setDownMovement(boolean pDownMovement) {
+        this._downMovement = pDownMovement;
     }
 
-    public void setFireGun(boolean _fireGun) {
-        this._fireGun = _fireGun;
+    public void setFireGun(boolean pFireGun) {
+        this._fireGun = pFireGun;
     }
 
     public float getNewX() {
@@ -78,12 +78,12 @@ public class VirtualControler {
         return _newY;
     }
 
-    public void setNewX(float _newX) {
-        this._newX = _newX;
+    public void setNewX(float pNewX) {
+        this._newX = pNewX;
     }
 
-    public void setNewY(float _newY) {
-        this._newY = _newY;
+    public void setNewY(float pNewY) {
+        this._newY = pNewY;
     }
     
     

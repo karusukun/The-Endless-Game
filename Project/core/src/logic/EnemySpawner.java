@@ -25,7 +25,11 @@ public class EnemySpawner
     private Array<Texture> _enemyImgs;
     private Stage _scene;
     private Array<EnemyVehicle> _enemies;
-   
+    
+    private static final int ENEMYX_RAND_MODULE = 5;
+    private static final int NUMBER_OF_ROADS = 5;
+    private static final int MINIMUM_OFFSET = 5;
+    
     public EnemySpawner(Stage pScene, Array<EnemyVehicle> pEnemies)
     {
         _timingSpawning = 0;
@@ -46,18 +50,23 @@ public class EnemySpawner
     
     public void SpawnEnemy()
     {
-        if(_remainingSpawns > 0)
-        {
-            int offset = 25;
-            int enemyX = (int) (((MathUtils.random(40,85) % 5) +1) * (GameplayScreen.getScene().getWidth()/5)) - offset*5;
-            //enemyX -= enemyX/2;
-            
-            EnemyVehicle tempActor = new EnemyVehicle(_enemyImgs.get(MathUtils.random(0,_enemyImgs.size - 1 ) ),enemyX );
-            _scene.addActor(tempActor);
-            _enemies.add(tempActor);
-            tempActor.getbBox().x = tempActor.getX();
-            tempActor.getbBox().y = tempActor.getY();
-            _remainingSpawns -=1;
+        try{
+            if(_remainingSpawns > 0)
+            {
+                int offset = 25;
+                int enemyX = (int) (((MathUtils.random(40,85) % ENEMYX_RAND_MODULE) +1) 
+                            * (GameplayScreen.getScene().getWidth()/NUMBER_OF_ROADS)) - offset*MINIMUM_OFFSET;
+                //enemyX -= enemyX/2;
+
+                EnemyVehicle tempActor = new EnemyVehicle(_enemyImgs.get(MathUtils.random(0,_enemyImgs.size - 1 ) ),enemyX );
+                _scene.addActor(tempActor);
+                _enemies.add(tempActor);
+                tempActor.getbBox().x = tempActor.getX();
+                tempActor.getbBox().y = tempActor.getY();
+                _remainingSpawns -=1;
+            }
+        }catch(Exception e){
+            System.out.println(e.toString());
         }
     }
     public float getTimingSpawning() {

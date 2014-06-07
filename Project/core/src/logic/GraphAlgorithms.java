@@ -17,7 +17,7 @@ import java.util.Random;
  */
 
 public class GraphAlgorithms {
-    private static GraphAlgorithms instance = null;
+    private static GraphAlgorithms instance  =  null;
     //private HashTable _nodosHash;
     private ArrayList<Node> _VisitedList; // Dejaremos el tamano maximo en 30
     

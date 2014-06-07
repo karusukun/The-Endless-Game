@@ -32,6 +32,8 @@ public class IntersectionSpawner {
     private Array<Intersection> _intersections;
     private int _recommendedPath;
     
+    private static final int OFFSET = 25; //Margen para que salga centrado
+    
     public IntersectionSpawner(Stage pScene, int pIntersecNumber, int recommendedPath, Array<Intersection> pIntersections)
     {
        _intersections = pIntersections;
@@ -50,64 +52,67 @@ public class IntersectionSpawner {
     
     public void SpawnIntersections()
     {
-        
-        int offset = 25;
-        int interWidth = (GameplayScreen.getScene().getViewport().getViewportWidth()/_intersecNumber) - offset;
-        int interX = GameplayScreen.getScene().getViewport().getViewportWidth() - interWidth*_intersecNumber - (offset*_intersecNumber);
-        int actualX = interX;
-        Intersection tempActor;
-        if(_recommendedPath != -1)
-            GenerateArrow(interX, interWidth, _recommendedPath);
-              
-        switch(_intersecNumber)
-        {
-            
-            case 1:
-               tempActor = new Intersection(_IntersecImgs.get(0), actualX+(offset*_intersecNumber)/2, interWidth);
-               _scene.addActor(tempActor);
-               _intersections.add(tempActor);
-               tempActor.getbBox().x = tempActor.getX();
-               tempActor.getbBox().y = tempActor.getY();
-               break;
-                
-            case 2:
-                
-                tempActor = new Intersection(_IntersecImgs.get(0), actualX+(offset*_intersecNumber)/2, interWidth);
-                _scene.addActor(tempActor);
-                _intersections.add(tempActor);
-                tempActor.getbBox().x = tempActor.getX();
-                tempActor.getbBox().y = tempActor.getY();
-                actualX +=  interX + interWidth;
-                
-                tempActor = new Intersection(_IntersecImgs.get(1), actualX+(offset*_intersecNumber)/2, interWidth);
-                _scene.addActor(tempActor);
-                _intersections.add(tempActor);
-                tempActor.getbBox().x = tempActor.getX();
-                tempActor.getbBox().y = tempActor.getY();
-                
-                break;
-            case 3:
-                
-                tempActor = new Intersection(_IntersecImgs.get(0), actualX+(offset*_intersecNumber)/2, interWidth);
-                _scene.addActor(tempActor);
-                _intersections.add(tempActor);
-                tempActor.getbBox().x = tempActor.getX();
-                tempActor.getbBox().y = tempActor.getY();
-                actualX +=  interX + interWidth; 
-                
-                tempActor = new Intersection(_IntersecImgs.get(1), actualX+(offset*_intersecNumber)/2, interWidth);
-                _scene.addActor(tempActor);
-                _intersections.add(tempActor);
-                tempActor.getbBox().x = tempActor.getX();
-                tempActor.getbBox().y = tempActor.getY();
-                actualX +=  interX + interWidth;
-               
-                tempActor = new Intersection(_IntersecImgs.get(2), actualX+(offset*_intersecNumber)/2, interWidth);
-                _scene.addActor(tempActor);
-                _intersections.add(tempActor);
-                tempActor.getbBox().x = tempActor.getX();
-                tempActor.getbBox().y = tempActor.getY();
-                break;
+        try{
+            int offset = OFFSET;
+            int interWidth = (GameplayScreen.getScene().getViewport().getViewportWidth()/_intersecNumber) - offset;
+            int interX = GameplayScreen.getScene().getViewport().getViewportWidth() - interWidth*_intersecNumber - (offset*_intersecNumber);
+            int actualX = interX;
+            Intersection tempActor;
+            if(_recommendedPath != -1)
+                GenerateArrow(interX, interWidth, _recommendedPath);
+
+            switch(_intersecNumber)
+            {
+
+                case 1:
+                   tempActor = new Intersection(_IntersecImgs.get(0), actualX+(offset*_intersecNumber)/2, interWidth);
+                   _scene.addActor(tempActor);
+                   _intersections.add(tempActor);
+                   tempActor.getbBox().x = tempActor.getX();
+                   tempActor.getbBox().y = tempActor.getY();
+                   break;
+
+                case 2:
+
+                    tempActor = new Intersection(_IntersecImgs.get(0), actualX+(offset*_intersecNumber)/2, interWidth);
+                    _scene.addActor(tempActor);
+                    _intersections.add(tempActor);
+                    tempActor.getbBox().x = tempActor.getX();
+                    tempActor.getbBox().y = tempActor.getY();
+                    actualX +=  interX + interWidth;
+
+                    tempActor = new Intersection(_IntersecImgs.get(1), actualX+(offset*_intersecNumber)/2, interWidth);
+                    _scene.addActor(tempActor);
+                    _intersections.add(tempActor);
+                    tempActor.getbBox().x = tempActor.getX();
+                    tempActor.getbBox().y = tempActor.getY();
+
+                    break;
+                case 3:
+
+                    tempActor = new Intersection(_IntersecImgs.get(0), actualX+(offset*_intersecNumber)/2, interWidth);
+                    _scene.addActor(tempActor);
+                    _intersections.add(tempActor);
+                    tempActor.getbBox().x = tempActor.getX();
+                    tempActor.getbBox().y = tempActor.getY();
+                    actualX +=  interX + interWidth; 
+
+                    tempActor = new Intersection(_IntersecImgs.get(1), actualX+(offset*_intersecNumber)/2, interWidth);
+                    _scene.addActor(tempActor);
+                    _intersections.add(tempActor);
+                    tempActor.getbBox().x = tempActor.getX();
+                    tempActor.getbBox().y = tempActor.getY();
+                    actualX +=  interX + interWidth;
+
+                    tempActor = new Intersection(_IntersecImgs.get(2), actualX+(offset*_intersecNumber)/2, interWidth);
+                    _scene.addActor(tempActor);
+                    _intersections.add(tempActor);
+                    tempActor.getbBox().x = tempActor.getX();
+                    tempActor.getbBox().y = tempActor.getY();
+                    break;
+            }
+        }catch(Exception e){
+            System.out.println(e.toString());
         }
     }
 
@@ -115,17 +120,21 @@ public class IntersectionSpawner {
         return _spawningTime;
     }
 
-    public void setSpawningTime(float _spawningTime) {
-        this._spawningTime = _spawningTime;
+    public void setSpawningTime(float pSpawningTime) {
+        this._spawningTime = pSpawningTime;
     }
 
-    private void GenerateArrow(int interX, int interWidth,int recommendedPath )
+    private void GenerateArrow(int pInterX, int pInterWidth,int pRecommendedPath )
     {
-        int offset = interWidth /2;
-        if(recommendedPath != 0)
-            interX += interX*(recommendedPath +1);
-        Arrow tmpArrow = new Arrow(_arrowText, interX + offset  , GameplayScreen.getScene().getViewport().getViewportHeight() - 180  );
-        _scene.addActor(tmpArrow);
+        try{
+            int offset = pInterWidth /2;
+            if(pRecommendedPath != 0)
+                pInterX += pInterX*(pRecommendedPath +1);
+            Arrow tmpArrow = new Arrow(_arrowText, pInterX + offset  , GameplayScreen.getScene().getViewport().getViewportHeight() - 180  );
+            _scene.addActor(tmpArrow);
+        }catch(Exception e){
+            System.out.println(e.toString());
+        }
     }
     
     
