@@ -96,7 +96,7 @@ public class GraphAlgorithms {
                 seedInicial++;
             }
 
-            if(node.getSeed()%5 == 0){ //Esto es que si es multiplo de 5, tiene uno que se devuelve
+            if(node.getSeed()%5 == 0 && node.getLevel()%4 == 0){ //Esto es que si es multiplo de 5, tiene uno que se devuelve
                 int replacePos = node.getNodesList().size() -1;
                 node.getNodesList().remove(replacePos);
                 node.getNodesList().add(replacePos, generateDevolution(node));
@@ -114,41 +114,48 @@ public class GraphAlgorithms {
             double newSeed = node.getSeed();
             int newLevel = node.getLevel();
             for(int dev = 0; dev < (int)(node.getSeed()%4)+1; dev++){
-                
                 newSeed = (double)Math.ceil(newSeed / 3);
-                //recorrido.setSeed(newSeed);
-                //recorrido.setLevel(recorrido.getLevel()-1);
-                
+                newLevel -= 1;
             }
             return new Node(newSeed,newLevel);
         }catch(Exception e){
             System.out.println(e.toString());
-            return null;
+            return new Node(1,1);
         }
     }
     
     
     private int cantNodesSiguientes(double seed){
-        if(seed % 3 == 0)
-            return 1;
-        if(seed % 2 == 0)
-             return 2;
-        else
-            return 3;
+        try{
+            if(seed % 3 == 0)
+                return 1;
+            if(seed % 2 == 0)
+                 return 2;
+            else
+                return 3;
+        }catch(Exception e){
+            System.out.println(e.toString());
+            return 2;
+        }
     }
     
     public int getRecommendedPath(Node node){ //Algritmo voraz que decide el camino
-        ArrayList<Node> nextNodesList = node.getNodesList();
-        for(int nodesIndex = 0; nodesIndex < nextNodesList.size(); nodesIndex++){
-            GraphAlgorithms.getInstance().generateIntersections(nextNodesList.get(nodesIndex));
-        }
-        Node ptr = nextNodesList.get(0);
-        for(int index = 0; index < nextNodesList.size(); index++){
-            if(nextNodesList.get(index).getNodesList().size() > ptr.getNodesList().size()){
-                ptr = nextNodesList.get(index);
+        try{
+            ArrayList<Node> nextNodesList = node.getNodesList();
+            for(int nodesIndex = 0; nodesIndex < nextNodesList.size(); nodesIndex++){
+                GraphAlgorithms.getInstance().generateIntersections(nextNodesList.get(nodesIndex));
             }
+            Node ptr = nextNodesList.get(0);
+            for(int index = 0; index < nextNodesList.size(); index++){
+                if(nextNodesList.get(index).getNodesList().size() > ptr.getNodesList().size()){
+                    ptr = nextNodesList.get(index);
+                }
+            }
+            return nextNodesList.indexOf(ptr); // Retorna si debe elegir el primer, segundo o tercer camino
+        }catch(Exception e){
+            System.out.println(e.toString());
+            return 0;
         }
-        return nextNodesList.indexOf(ptr); // Retorna si debe elegir el primer, segundo o tercer camino
     }
     
     public Node getInitialNode(){
