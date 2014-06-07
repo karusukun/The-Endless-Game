@@ -149,6 +149,7 @@ public class GraphAlgorithms {
             if(probability < PROBABILITY_TO_RECOMMEND){
                     Node node = new Node(pNode.getSeed(),pNode.getLevel());
                 
+                    generateIntersections(node);
                     ArrayList<Node> nextNodesList = node.getNodesList();
                     for(int nodesIndex = 0; nodesIndex < nextNodesList.size(); nodesIndex++){
                         GraphAlgorithms.getInstance().generateIntersections(nextNodesList.get(nodesIndex));
