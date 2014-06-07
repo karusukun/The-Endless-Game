@@ -10,8 +10,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.EventListener;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.gdx.EndlessGame.GameplayScreen;
 import com.gdx.EndlessGame.Main;
+import logic.VirtualControler;
 
 /**
  *
@@ -19,21 +23,52 @@ import com.gdx.EndlessGame.Main;
  */
 public class ShootingPad extends Actor {
     
-    private TextureRegion button;
+    private TextureRegion _button;
+    private boolean _touched;
+    VirtualControler _controler;
     
-    public ShootingPad()
+    public ShootingPad(VirtualControler pControler)
     {
         
-        button = new TextureRegion(Main.MANAGER.get("btnShooting.png", Texture.class),0,0,64,64);
+        _controler = pControler;
+        _button = new TextureRegion(Main.MANAGER.get("btnShooting.png", Texture.class),0,0,64,64);
         setPosition(GameplayScreen.getScene().getWidth() - 70, GameplayScreen.getScene().getHeight() / 2);
         setSize(64,64);
+        _touched = false;
+        
+        addListener(new InputListener() {
+            
+            
+
+          
+             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) 
+             {
+                 _controler.setFireGun(true);
+                 return true;            
+             }
+         });
         
     }
+
+    public boolean isTouched() {
+        return _touched;
+    }
+
+    public void setTouched(boolean _touched) {
+        this._touched = _touched;
+    }
+
+     
+
+    
+    
+    
+    
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
         
-        batch.draw(button, getX(), getY());
+        batch.draw(_button, getX(), getY());
     }
     
     

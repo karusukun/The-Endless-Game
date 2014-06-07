@@ -46,7 +46,7 @@ public class PlayerVehicle extends Vehicle
             
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) 
             {
-                 setTouched(false);
+                setTouched(false);
             }
 
           

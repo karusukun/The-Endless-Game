@@ -10,8 +10,11 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.utils.Array;
 import com.gdx.EndlessGame.GameplayScreen;
+import static com.gdx.EndlessGame.Main.MANAGER;
 
 /**
  *
@@ -19,25 +22,52 @@ import com.gdx.EndlessGame.GameplayScreen;
  */
 public class Bullet extends GameElement{
     
-      private TextureRegion _region;
+    private TextureRegion _region;
+    private int _direction, _indexText;
+    private Rectangle _bBox;
+    private Array<Texture> _textures;
+    private Texture _actualText;
     
-    public Bullet(Texture pImage) {
+    public Bullet(int pDirection, int x, int y)
+    {
+        _textures = new Array<Texture>();
+        _indexText = 0;
         
-        _region = new TextureRegion(pImage,0, 0, pImage.getWidth(), pImage.getWidth());
-        setSize(pImage.getWidth(), pImage.getHeight());
+        _textures.add(MANAGER.get("Lasers/laserRed01.png", Texture.class));
+        _textures.add(MANAGER.get("Lasers/laserRed02.png", Texture.class));
+        _textures.add(MANAGER.get("Lasers/laserRed03.png", Texture.class));
+        _textures.add(MANAGER.get("Lasers/laserRed04.png", Texture.class));
+        _textures.add(MANAGER.get("Lasers/laserRed05.png", Texture.class));
+        _textures.add(MANAGER.get("Lasers/laserRed06.png", Texture.class));
+        _textures.add(MANAGER.get("Lasers/laserRed07.png", Texture.class));
+        
+        _actualText = _textures.get(0);
+        
+        _direction = pDirection;
+        _region = new TextureRegion(_actualText,0, 0, _actualText.getWidth(), _actualText.getWidth());
+        setSize(_actualText.getWidth(), _actualText.getHeight());
         setBounds(0, 0, getWidth(), getHeight());
-        setPosition(MathUtils.random(0, GameplayScreen.getScene().getWidth()), GameplayScreen.getScene().getHeight());
+        setPosition(x, y);
+        _bBox = new Rectangle(getX(),getY(), getWidth(), getHeight());
+        
     }
 
     @Override
     public void act(float delta) {
            
-        float newPos = getY() - 200 * delta;
-        if(newPos < 0)
-            this.remove();
+        _indexText++;
+        if(_indexText > _textures.size-1)
+            _indexText = 0;
+        
+        float newPos = getY() + (700* _direction) * delta;
         setY(newPos);
+        _bBox.x = getX();
+        _bBox.y = getY();
+        _bBox.height = getHeight();
+        _bBox.width = getWidth();
         toBack();
-       
+        _actualText = _textures.get(_indexText);
+        _region = new TextureRegion(_actualText,0, 0, _actualText.getWidth(), _actualText.getWidth());
     }
 
     @Override
@@ -54,6 +84,10 @@ public class Bullet extends GameElement{
                 getOriginY(),getWidth(),getHeight(),
                 getScaleX(),getScaleY(),getRotation());
                
+    }
+    
+    public Rectangle getbBox() {
+        return _bBox;
     }
     
     
