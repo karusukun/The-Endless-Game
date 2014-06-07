@@ -67,6 +67,7 @@ public class IntersectionSpawner {
             Intersection tempActor;
             if(_recommendedPath != -1)
                 GenerateArrow(interX, interWidth, _recommendedPath);
+            GenerateWeaponPack();
 
             switch(_intersecNumber)
             {

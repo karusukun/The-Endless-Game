@@ -22,10 +22,11 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.gdx.EndlessGame.*;
 import com.gdx.EndlessGame.InputHandler.*;
 import com.gdx.EndlessGame.UIElements.*;
-import com.gdx.EndlessGame.*;
 import logic.*;
+import logic.genetics.WeaponLogic;
 
 /**
  *
@@ -57,7 +58,7 @@ public class GameplayScreen extends Pantalla{
     private  Array<EnemyVehicle> _enemies;
     private  Array<Intersection> _intersections;
     private Array<Bullet> _bullets;
-    private Array<Weapon> _weapon;
+    private Array<Weapon> _weapons;
     private Node _graph;
     
     public GameplayScreen(Main pGame, Player pPlayer, Node pGraph) {
@@ -82,7 +83,7 @@ public class GameplayScreen extends Pantalla{
         _enemies = new Array<EnemyVehicle>();
         _bullets = new Array<Bullet>();
         _intersections = new Array<Intersection>();
-        _weapon = new Array<Weapon>();
+        _weapons = new Array<Weapon>();
         
         //Seteando los actores y los assets
         _fireButton = new ShootingPad(_controler);
@@ -95,7 +96,7 @@ public class GameplayScreen extends Pantalla{
         GraphAlgorithms.getInstance().generateIntersections(_graph);
         
         
-        _interSpawner = new IntersectionSpawner(_stage, _graph.getNodesList().size(),GraphAlgorithms.getInstance().getRecommendedPath(_graph),_intersections, _weapon);
+        _interSpawner = new IntersectionSpawner(_stage, _graph.getNodesList().size(),GraphAlgorithms.getInstance().getRecommendedPath(_graph),_intersections, _weapons);
             
         //Agregando actores al stage
         _stage.addActor(_player);
@@ -276,6 +277,17 @@ public class GameplayScreen extends Pantalla{
     {
         EnemyVehicle enemy;
         Bullet bullet;
+        
+                for(int position = 0; position < _weapons.size; position++)
+        {
+            if(_weapons.get(position).getbBox().overlaps(_player.getbBox()))
+            {
+                Weapon newWeapon = WeaponLogic.getInstance().newWeapon(_user.getWeapon());
+                _user.setWeapon(newWeapon);
+            }
+        }
+
+        
         for(int position = 0; position < _enemies.size; position++)
         {
             enemy = _enemies.get(position);
