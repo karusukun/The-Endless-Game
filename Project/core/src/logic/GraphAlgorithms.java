@@ -75,6 +75,9 @@ public class GraphAlgorithms {
 
     public boolean isGeneratedBackwards(Node initialNode, Node nodeToFind){
         try{
+            if(initialNode.getLevel() <  nodeToFind.getLevel())
+                return false;
+            
             Node recorrido = new Node(initialNode.getSeed(),initialNode.getLevel());
             while(recorrido.getLevel() != nodeToFind.getLevel()){
                 double newSeed = (double)Math.ceil(recorrido.getSeed() / 3);
