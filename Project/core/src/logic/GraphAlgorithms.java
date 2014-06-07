@@ -68,8 +68,8 @@ public class GraphAlgorithms {
             return false;
         }
     }
-    
-    private boolean isGeneratedBackwards(Node initialNode, Node nodeToFind){
+
+    public boolean isGeneratedBackwards(Node initialNode, Node nodeToFind){
         try{
             Node recorrido = new Node(initialNode.getSeed(),initialNode.getLevel());
             while(recorrido.getLevel() != nodeToFind.getLevel()){
@@ -86,8 +86,8 @@ public class GraphAlgorithms {
             return false;
         }
     }
-    
-    private void generateIntersections(Node node){
+
+    public void generateIntersections(Node node){
         try{
             int cantNext = cantNodesSiguientes(node.getSeed());
             double seedInicial = ((node.getSeed() - 1)*3)+1;
@@ -106,11 +106,11 @@ public class GraphAlgorithms {
         }catch(Exception e){
             System.out.println(e.toString());
         }
-        
+
     }
     
     
-    public Node generateDevolution(Node node){
+    private Node generateDevolution(Node node){
         try{
             double newSeed = node.getSeed();
             int newLevel = node.getLevel();
@@ -126,7 +126,7 @@ public class GraphAlgorithms {
     }
     
     
-    private int cantNodesSiguientes(double seed){
+    public int cantNodesSiguientes(double seed){
         try{
             if(seed % 3 == 0)
                 return 1;
