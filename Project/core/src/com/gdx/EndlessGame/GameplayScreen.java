@@ -90,7 +90,10 @@ public class GameplayScreen extends Pantalla{
         _asteroidSpawn = new AsteroidSpawner(_stage);
         _enemySpawner = new EnemySpawner(_stage,_enemies);
         
-        _interSpawner = new IntersectionSpawner(_stage, _graph.getNodesList().size(),_intersections);
+        GraphAlgorithms.getInstance().generateIntersections(_graph);
+        
+        
+        _interSpawner = new IntersectionSpawner(_stage, _graph.getNodesList().size(),GraphAlgorithms.getInstance().getRecommendedPath(_graph),_intersections);
             
         //Agregando actores al stage
         _stage.addActor(_player);
@@ -319,6 +322,7 @@ public class GameplayScreen extends Pantalla{
             inter = _intersections.get(position);
             if(inter.getbBox().overlaps(_player.getbBox())){
                 nextStage = true;
+                _graph = _graph.getNodesList().get(position);
                 Main.mixer.PlaySfxNextStage();
             }
         }

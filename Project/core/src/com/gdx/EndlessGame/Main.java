@@ -91,6 +91,7 @@ public void LoadAssets()
     MANAGER.load("ufoGreen.png", Texture.class);
     MANAGER.load("ufoYellow.png", Texture.class);
     MANAGER.load("btnShooting.png", Texture.class);
+    MANAGER.load("arrow.png", Texture.class);
     
     //loading misc
     MANAGER.load("Meteors/meteorBrown_big1.png", Texture.class);
