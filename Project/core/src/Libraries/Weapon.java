@@ -8,6 +8,8 @@ package Libraries;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import java.util.Random;
 import logic.genetics.WeaponLogic;
 
@@ -15,12 +17,14 @@ import logic.genetics.WeaponLogic;
  *
  * @author Nicolas
  */
-public class Weapon {
+public class Weapon extends GameElement {
     private int _laneRange;
     private Color _color;
     private int _beamThickness;
     private Polygon _shootingShape;
     private long _binaryIdentifier;
+    private Rectangle _bBox;
+    
     
     
     public Weapon(Color pColor, long pGen)

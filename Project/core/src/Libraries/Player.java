@@ -18,6 +18,7 @@ public class Player {
     {
         this._lifes = 3;
         this._points = 0;
+        _weapon = Weapon.randomWeapon();
     }
     
     public synchronized static Player getInstance()
@@ -41,10 +42,6 @@ public class Player {
         return _name;
     }
 
-    public PlayerVehicle getVehicle() {
-        return _vehicle;
-    }
-
     public void setLifes(int _lifes) {
         this._lifes = _lifes;
     }
@@ -57,19 +54,21 @@ public class Player {
         this._name = _name;
     }
 
-    public void setVehicle(PlayerVehicle _vehicle) {
-        this._vehicle = _vehicle;
-    }
-
     public static void setInstance(Player _instance) {
         Player._instance = _instance;
     }
+
+    public Weapon getWeapon() {
+        return _weapon;
+    }
+
+    public void setWeapon(Weapon _weapon) {
+        this._weapon = _weapon;
+    }  
     
-    
-    
-    int _lifes;
-    long _points;
-    String _name = "";
-    PlayerVehicle _vehicle;
-    static Player _instance;
+    private Weapon _weapon;
+    private int _lifes;
+    private long _points;
+    private String _name = "";
+    private static Player _instance;
 }
