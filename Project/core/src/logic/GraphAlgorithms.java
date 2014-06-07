@@ -37,13 +37,15 @@ public class GraphAlgorithms {
     }
     
     public boolean wasNodeVisited(Node pNode){
+        
         try{
             if(pNode.getNodesList().isEmpty()){
                 this.generateIntersections(pNode);
             }
             for(int trail = 0; trail < _VisitedList.size(); trail++){
                 if(this.isGeneratedBackwards(_VisitedList.get(trail), pNode)){
-                    pNode.setVisited(true);
+                    //pNode.setVisited(true);
+                    System.out.println("Esta buscando si se puede generar desde la lista");
                     return true;
                 }
             }
@@ -66,7 +68,6 @@ public class GraphAlgorithms {
             pNode.setNodesList(new ArrayList<Node>());
             return false;
         }catch(Exception e){
-            e.printStackTrace();
             System.out.println(e.toString());
             return false;
         }
@@ -79,6 +80,7 @@ public class GraphAlgorithms {
                 double newSeed = (double)Math.ceil(recorrido.getSeed() / 3);
                 recorrido.setSeed(newSeed);
                 recorrido.setLevel(recorrido.getLevel()-1);
+                System.out.println("ESTOY ENCICLADO");
             }
             if(recorrido.getSeed() == nodeToFind.getSeed()){
                 return true;
