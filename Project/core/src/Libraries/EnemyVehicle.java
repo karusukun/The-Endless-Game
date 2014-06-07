@@ -54,9 +54,7 @@ public class EnemyVehicle extends Vehicle {
         _bBox.y = getY();
         _bBox.height = getHeight();
         _bBox.width = getWidth();
-        
-        
-       
+              
     }
     
         

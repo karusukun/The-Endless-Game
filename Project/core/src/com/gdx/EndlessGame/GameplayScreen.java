@@ -47,7 +47,6 @@ public class GameplayScreen extends Pantalla{
     
     //Asserts
     private BackgroundAnimation _background;
-    private Music _gamePlayMusic;
     private float duracion;
     private static ShootingPad _fireButton;
     private AsteroidSpawner _asteroidSpawn;
@@ -84,17 +83,14 @@ public class GameplayScreen extends Pantalla{
         _intersections = new Array<Intersection>();
         
         //Seteando los actores y los assets
-        _fireButton = new ShootingPad();
+        _fireButton = new ShootingPad(_controler);
         _background = new BackgroundAnimation();
         _background.setPosition(0, _stage.getHeight());
     
         _asteroidSpawn = new AsteroidSpawner(_stage);
         _enemySpawner = new EnemySpawner(_stage,_enemies);
         _interSpawner = new IntersectionSpawner(_stage, 3,_intersections);
-        
-        _gamePlayMusic = Gdx.audio.newMusic(Gdx.files.internal("Music/GameplayM.mp3"));
-        _gamePlayMusic.setLooping(true);
-        _gamePlayMusic.play();        
+            
         //Agregando actores al stage
         _stage.addActor(_player);
         _player.getbBox().x = _player.getX();
@@ -168,7 +164,6 @@ public class GameplayScreen extends Pantalla{
         if(nextStage)
         {
             this._game.setScreen(new GameplayScreen(_game, _user, _graph));
-            this._gamePlayMusic.dispose();
         }
         
         _stage.draw();
@@ -177,7 +172,6 @@ public class GameplayScreen extends Pantalla{
 
     @Override
     public void dispose() {
-       _gamePlayMusic.dispose();
        _stage.dispose();
        _fireButton.remove();
        _background.remove();
@@ -220,29 +214,51 @@ public class GameplayScreen extends Pantalla{
         if(_controler.isUpMovement()){_player.MoveUp();}
         if(_controler.isLeftMovement()){_player.MoveLeft();}
         if(_controler.isRightMovement()){_player.MoveRight();}
-        if (_controler.isFireGun())
+        if (_controler.isFireGun() )//|| _fireButton.isTouched())
         {
-                        
+             Bullet bullet = new Bullet(1, (int)_player.getX()+20,(int)_player.getY() + (int)_player.getHeight() + 30);
+             _bullets.add(bullet);
+             _stage.addActor(bullet);
+             bullet.getbBox().x = bullet.getX();
+             bullet.getbBox().y = bullet.getY();
+             _controler.setFireGun(false);
+             Main.mixer.PlaySfxLaser();
         }
          
       
     }
     private void checkLists() 
     {
-        for(int i = 0; i < _enemies.size ; i++ )
+        for(int position = 0; position < _enemies.size ; position++ )
         {
-            if(_enemies.get(i).getY() < 0)
-                _enemies.removeIndex(i);
-            else if(_enemies.get(i).getLife() <= 0)
-                _enemies.removeIndex(i);
+            if(_enemies.get(position).getY() < 0){
+                
+                _enemies.get(position).remove();
+                _enemies.removeIndex(position);
+                
+            }
+            else if(_enemies.get(position).getLife() <= 0){
+                
+                _enemies.get(position).remove();
+                _enemies.removeIndex(position);
+                
+            }
         }
-        for(int i = 0; i < _intersections.size; i++)
+  /*      for(int position = 0; position < _intersections.size; position++)
         {
             
         }
-        for(int i = 0; i < _bullets.size; i++)
+   */     
+        Bullet bullet;
+        for(int position = 0; position < _bullets.size; position++)
         {
-        
+            bullet = _bullets.get(position);
+            if(bullet.getY() < 0 || bullet.getY() > _stage.getViewport().getViewportHeight())
+            {
+                bullet.remove();
+                _bullets.removeIndex(position);
+            }
+                
         }    
             
     }
@@ -250,25 +266,56 @@ public class GameplayScreen extends Pantalla{
     private void checkColitions()
     {
         EnemyVehicle enemy;
-        for(int i = 0; i < _enemies.size; i++)
+        Bullet bullet;
+        for(int position = 0; position < _enemies.size; position++)
         {
-            enemy = _enemies.get(i);
+            enemy = _enemies.get(position);
             if(enemy.getbBox().overlaps(_player.getbBox()))
             {
-               gameOver = true;
+                _user.setLifes(_user.getLifes() - 1);
+                _enemies.removeIndex(position);
+                enemy.remove();
+               
+                if(_user.getLifes() <= 0)
+                    gameOver = true;
             }
-            else
+            else 
             {
                 //colisiones con balas u otros elementos
+                
+                for(int bulletPos = 0; bulletPos < _bullets.size; bulletPos++)
+                {
+                    bullet = _bullets.get(bulletPos);
+                    if(enemy.getbBox().overlaps(bullet.getbBox()))
+                    {
+                        enemy.setLife(enemy.getLife() - 1);
+                        _bullets.removeIndex(bulletPos);
+                        bullet.remove();
+                    }
+                }
             }
         }
         Intersection inter;
-        for(int i = 0; i < _intersections.size; i++)
+        for(int position = 0; position < _intersections.size; position++)
         {
-            inter = _intersections.get(i);
-            if(inter.getbBox().overlaps(_player.getbBox()))
+            inter = _intersections.get(position);
+            if(inter.getbBox().overlaps(_player.getbBox())){
                 nextStage = true;
-            
+                Main.mixer.PlaySfxNextStage();
+            }
+        }
+        
+        for(int position = 0; position < _bullets.size;position++)
+        {
+            bullet = _bullets.get(position);
+            if(bullet.getbBox().overlaps(_player.getbBox()))
+            {
+                _user.setLifes(_user.getLifes() - 1);
+                if(_user.getLifes() <= 0)
+                    gameOver = true;
+                _bullets.removeIndex(position);
+                bullet.remove();
+            }
         }
     
     }
@@ -285,6 +332,7 @@ public class GameplayScreen extends Pantalla{
     public static ShootingPad getFireButton() {
         return _fireButton;
     }
+
 
     
     

@@ -22,6 +22,7 @@ public class MenuScreen extends Pantalla {
     @Override
     public void show() {
         
+         Main.mixer.PlayGamePMusic(true);
          _game.setScreen(_game._gameplayScreen);
     }
 

@@ -10,16 +10,20 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.gdx.EndlessGame.UIElements.SoundMixer;
 
 
 
 public class Main extends Game {
-	public SpriteBatch batch;
-        public OrthographicCamera camera;
+	public static SpriteBatch batch;
+        public static OrthographicCamera camera;
         private int _gameHeight;
         private int _gameWidth;
         public static AssetManager MANAGER;
+        public static SoundMixer mixer;
+       
         private Player _player;
+        
         
         //Declaracion de las diferentes screens
         public Pantalla _loadingScreen, _menuScreen, _gameplayScreen, _gameOverScreen;
@@ -28,6 +32,7 @@ public class Main extends Game {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
+                mixer = new SoundMixer();
                 _gameHeight = Gdx.graphics.getHeight();
                 _gameWidth = Gdx.graphics.getWidth();
                 camera = new OrthographicCamera(_gameWidth, _gameHeight);
@@ -37,6 +42,7 @@ public class Main extends Game {
                 //Creacion de las pantallas
                 _loadingScreen = new LoadingScreen(this);
                 _menuScreen = new MenuScreen(this);
+                //_player = new ;
                 _gameplayScreen = new GameplayScreen(this, _player, null);
                 _gameOverScreen = new GameOverScreen(this);
                 
