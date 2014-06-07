@@ -24,6 +24,7 @@ public class MenuScreen extends Pantalla {
         
          Main.mixer.PlayGamePMusic(true);
          _game.setScreen(_game._gameplayScreen);
+         _game.getPlayer().GenerateFirstWeapon();
     }
 
     @Override

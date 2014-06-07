@@ -26,6 +26,8 @@ import com.gdx.EndlessGame.InputHandler.*;
 import com.gdx.EndlessGame.UIElements.*;
 import com.gdx.EndlessGame.*;
 import logic.*;
+import logic.genetics.GeneticOperator;
+import logic.genetics.WeaponLogic;
 
 /**
  *
@@ -53,8 +55,10 @@ public class GameplayScreen extends Pantalla{
     private EnemySpawner _enemySpawner;
     private IntersectionSpawner _interSpawner;
     
+    
     //Elements of the game management
     private  Array<EnemyVehicle> _enemies;
+    private Array<Weapon> _weapons;
     private  Array<Intersection> _intersections;
     private Array<Bullet> _bullets;
     private Node _graph;
@@ -76,7 +80,9 @@ public class GameplayScreen extends Pantalla{
     public void show() {
         
         //Seteando el jugador
+        _weapons = new Array<Weapon>();
         _player = new PlayerVehicle();
+        
         //setting Game managements
         _enemies = new Array<EnemyVehicle>();
         _bullets = new Array<Bullet>();
@@ -93,10 +99,11 @@ public class GameplayScreen extends Pantalla{
         GraphAlgorithms.getInstance().generateIntersections(_graph);
         
         
-        _interSpawner = new IntersectionSpawner(_stage, _graph.getNodesList().size(),GraphAlgorithms.getInstance().getRecommendedPath(_graph),_intersections);
+        _interSpawner = new IntersectionSpawner(_stage, _graph.getNodesList().size(),GraphAlgorithms.getInstance().getRecommendedPath(_graph),_intersections, _weapons);
             
         //Agregando actores al stage
         _stage.addActor(_player);
+        
         _player.getbBox().x = _player.getX();
         _player.getbBox().y = _player.getY();
         _stage.addActor(_fireButton);
@@ -251,11 +258,7 @@ public class GameplayScreen extends Pantalla{
                 
             }
         }
-  /*      for(int position = 0; position < _intersections.size; position++)
-        {
-            
-        }
-   */     
+        
         Bullet bullet;
         for(int position = 0; position < _bullets.size; position++)
         {
@@ -274,6 +277,16 @@ public class GameplayScreen extends Pantalla{
     {
         EnemyVehicle enemy;
         Bullet bullet;
+        
+        for(int position = 0; position < _weapons.size; position++)
+        {
+            if(_weapons.get(position).getbBox().overlaps(_player.getbBox()))
+            {
+                Weapon newWeapon = WeaponLogic.getInstance().newWeapon(_user.getWeapon());
+                _user.setWeapon(newWeapon);
+            }
+        }
+        
         for(int position = 0; position < _enemies.size; position++)
         {
             enemy = _enemies.get(position);
@@ -342,6 +355,7 @@ public class GameplayScreen extends Pantalla{
         }
     
     }
+    
     
     public static Stage getScene()
       { 

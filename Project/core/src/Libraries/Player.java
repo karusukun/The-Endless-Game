@@ -18,6 +18,11 @@ public class Player {
     {
         this._lifes = 3;
         this._points = 0;
+        
+    }
+    
+    public void GenerateFirstWeapon()
+    {
         _weapon = Weapon.randomWeapon();
     }
     
@@ -45,6 +50,8 @@ public class Player {
     public void setLifes(int _lifes) {
         this._lifes = _lifes;
     }
+    
+    
 
     public void setPoints(long _points) {
         this._points = _points;

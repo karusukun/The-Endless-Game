@@ -60,22 +60,22 @@ public class EnemyVehicle extends Vehicle {
     @Override
     public void act(float pDelta) {
         try{
-        float newPos = getY() - POS_MODIFIER * pDelta;                    
-        setY(newPos);
-        _bBox.x = getX();
-        _bBox.y = getY();
-        _bBox.height = getHeight();
-        _bBox.width = getWidth();
-        
-        int playerX = (int)(GameplayScreen.getPlayer().getX() + GameplayScreen.getPlayer().getWidth()/2);
-        int MyPosLeft = (int) getX();
-        int MyposRight = (int) (getX()+ getWidth());
-        
-        if(playerX >= MyPosLeft && playerX <= MyposRight && _remainingShots > 0 ) 
-        {
-            _shooting = true;
-            _remainingShots -=1;
-        }
+            float newPos = getY() - POS_MODIFIER * pDelta;                    
+            setY(newPos);
+            _bBox.x = getX();
+            _bBox.y = getY();
+            _bBox.height = getHeight();
+            _bBox.width = getWidth();
+
+            int playerX = (int)(GameplayScreen.getPlayer().getX() + GameplayScreen.getPlayer().getWidth()/2);
+            int MyPosLeft = (int) getX();
+            int MyposRight = (int) (getX()+ getWidth());
+
+            if(playerX >= MyPosLeft && playerX <= MyposRight && _remainingShots > 0 ) 
+            {
+                _shooting = true;
+                _remainingShots -=1;
+            }
         }catch(Exception e){
             System.out.println(e.toString());
         }

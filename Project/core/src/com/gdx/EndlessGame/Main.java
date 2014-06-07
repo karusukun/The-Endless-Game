@@ -79,7 +79,13 @@ public class Main extends Game {
         
         MANAGER.dispose();
         batch.dispose();
-    }    
+    } 
+
+    public Player getPlayer() {
+        return _player;
+    }
+    
+    
 
 public void LoadAssets()
 {
@@ -92,6 +98,9 @@ public void LoadAssets()
     MANAGER.load("ufoYellow.png", Texture.class);
     MANAGER.load("btnShooting.png", Texture.class);
     MANAGER.load("arrow.png", Texture.class);
+    MANAGER.load("Power-ups/bolt_silver.png",Texture.class);
+    MANAGER.load("Power-ups/bolt_bronze.png",Texture.class);
+    MANAGER.load("Power-ups/bolt_gold.png",Texture.class);
     
     //loading misc
     MANAGER.load("Meteors/meteorBrown_big1.png", Texture.class);

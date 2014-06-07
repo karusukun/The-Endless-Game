@@ -9,6 +9,7 @@ package logic;
 import Libraries.Arrow;
 import Libraries.Asteroid;
 import Libraries.Intersection;
+import Libraries.Weapon;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -31,10 +32,12 @@ public class IntersectionSpawner {
     private int _intersecNumber;
     private Array<Intersection> _intersections;
     private int _recommendedPath;
+       private Array<Weapon> _weapons;
     
-    public IntersectionSpawner(Stage pScene, int pIntersecNumber, int recommendedPath, Array<Intersection> pIntersections)
+    public IntersectionSpawner(Stage pScene, int pIntersecNumber, int recommendedPath, Array<Intersection> pIntersections, Array<Weapon> pWeapons)
     {
        _intersections = pIntersections;
+       _weapons = pWeapons;
         
        _recommendedPath = recommendedPath;
        _IntersecImgs = new Array<Texture>();
@@ -58,6 +61,7 @@ public class IntersectionSpawner {
         Intersection tempActor;
         if(_recommendedPath != -1)
             GenerateArrow(interX, interWidth, _recommendedPath);
+        GenerateWeaponPack();
               
         switch(_intersecNumber)
         {
@@ -119,6 +123,16 @@ public class IntersectionSpawner {
         this._spawningTime = _spawningTime;
     }
 
+    private void GenerateWeaponPack()
+    {
+        Weapon weaponPack = Weapon.randomWeapon();
+        _weapons.add(weaponPack);
+        _scene.addActor(weaponPack);
+        weaponPack.getbBox().x = weaponPack.getX();
+        weaponPack.getbBox().y = weaponPack.getY();
+        
+    }
+    
     private void GenerateArrow(int interX, int interWidth,int recommendedPath )
     {
         int offset = interWidth /2;
@@ -126,6 +140,8 @@ public class IntersectionSpawner {
             interX += interX*(recommendedPath +1);
         Arrow tmpArrow = new Arrow(_arrowText, interX + offset  , GameplayScreen.getScene().getViewport().getViewportHeight() - 180  );
         _scene.addActor(tmpArrow);
+              
+        
     }
     
     
