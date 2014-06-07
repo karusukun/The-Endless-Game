@@ -27,18 +27,18 @@ public class EnemyVehicle extends Vehicle {
     private int _life;
     private Rectangle _bBox;
     private boolean _shooting;
+    private int _remainingShots;
     
     public EnemyVehicle(Texture pTexture, int x)
     {
         this._type = ElementType.ENEMY_VEHICLE;    
-        _life = 1;
+        _life = _remainingShots = 1;
         _shooting = false;
         
         _region = new TextureRegion(pTexture,0,0,pTexture.getWidth(), pTexture.getHeight());
         setSize(50, 50);
         setBounds(0, 0, getWidth(), getHeight());
         setPosition(x , GameplayScreen.getScene().getHeight());
-        //setPosition(MathUtils.random(0, GameplayScreen.getScene().getWidth()), GameplayScreen.getScene().getHeight());
         _bBox = new Rectangle(getX(),getY(), getWidth(), getHeight());
         
                   
@@ -52,16 +52,21 @@ public class EnemyVehicle extends Vehicle {
     @Override
     public void act(float delta) {
         
-        float newPos = getY() - 150 * delta;                    
+        float newPos = getY() - 125 * delta;                    
         setY(newPos);
         _bBox.x = getX();
         _bBox.y = getY();
         _bBox.height = getHeight();
         _bBox.width = getWidth();
-        if(GameplayScreen.getPlayer().getX()+GameplayScreen.getPlayer().getWidth()/2 
-                == getX()+ getWidth()/2 )
+        
+        int playerX = (int)(GameplayScreen.getPlayer().getX() + GameplayScreen.getPlayer().getWidth()/2);
+        int MyPosLeft = (int) getX();
+        int MyposRight = (int) (getX()+ getWidth());
+        
+        if(playerX >= MyPosLeft && playerX <= MyposRight && _remainingShots > 0 ) 
         {
             _shooting = true;
+            _remainingShots -=1;
         }
     }
     
