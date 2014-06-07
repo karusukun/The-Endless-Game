@@ -121,9 +121,10 @@ public class IntersectionSpawner {
 
     private void GenerateArrow(int interX, int interWidth,int recommendedPath )
     {
+        int offset = interWidth /2;
         if(recommendedPath != 0)
             interX += interX*(recommendedPath +1);
-        Arrow tmpArrow = new Arrow(_arrowText, interX + 80, interWidth - 30);
+        Arrow tmpArrow = new Arrow(_arrowText, interX + offset  , GameplayScreen.getScene().getViewport().getViewportHeight() - 130  );
         _scene.addActor(tmpArrow);
     }
     
