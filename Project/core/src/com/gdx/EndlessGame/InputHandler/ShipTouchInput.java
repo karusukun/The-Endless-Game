@@ -16,10 +16,10 @@ import logic.VirtualControler;
  */
 public class ShipTouchInput extends InputAdapter {
     
-    private VirtualControler controler;
+    private VirtualControler _controler;
 
     public ShipTouchInput(VirtualControler pControler) {
-        this.controler = pControler;
+        this._controler = pControler;
     }
 
     @Override
@@ -27,9 +27,9 @@ public class ShipTouchInput extends InputAdapter {
         try{
         if(GameplayScreen.getPlayer().isTouched())
         {
-            controler.setIsPressed(true);
-            controler.setNewX(pScreenX);
-            controler.setNewY(pScreenY);
+            _controler.setIsPressed(true);
+            _controler.setNewX(pScreenX);
+            _controler.setNewY(pScreenY);
         }
         return true;
         }catch(Exception e){
@@ -41,7 +41,7 @@ public class ShipTouchInput extends InputAdapter {
     @Override
     public boolean touchUp(int pScreenX, int pScreenY, int pPointer, int pButton) {
         try{
-            
+            _controler.setIsPressed(false);
             return true;
         }catch(Exception e){
             System.out.println(e.toString());
@@ -52,7 +52,7 @@ public class ShipTouchInput extends InputAdapter {
     @Override
     public boolean touchDown(int pScreenX, int pScreenY, int pPointer, int pButton) {
         try{
-            controler.setFireGun(false);
+            _controler.setIsPressed(true);
             return true;
          }catch(Exception e){
             System.out.println(e.toString());

@@ -34,7 +34,7 @@ public class Asteroid extends GameElement{
     @Override
     public void act(float pDelta) {
         try{
-            float newPos = getY() - 200 * pDelta;
+            float newPos = getY() - 250 * pDelta;
             if(newPos < 0)
                 this.remove();
             setY(newPos);

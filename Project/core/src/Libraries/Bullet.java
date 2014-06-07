@@ -59,7 +59,7 @@ public class Bullet extends GameElement{
             if(_indexText > _textures.size-1)
                 _indexText = 0;
 
-            float newPos = getY() + (650* _direction) * pDelta;
+            float newPos = getY() + (550* _direction) * pDelta;
             setY(newPos);
             _bBox.x = getX();
             _bBox.y = getY();

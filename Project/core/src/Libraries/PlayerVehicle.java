@@ -35,9 +35,10 @@ public class PlayerVehicle extends Vehicle
        _touched = false; 
        this._type = ElementType.PLAYER_VEHICLE;
        this._region = new TextureRegion( Main.MANAGER.get("playerShip2_blue.png", Texture.class), 112,75);
-       setPosition(380 , 50);
+       System.out.println(GameplayScreen.getScene().getViewport().getViewportWidth()/2);
        setSize(50, 50);
        setBounds(0, 0, getWidth(), getHeight());
+       setPosition(GameplayScreen.getScene().getViewport().getViewportWidth()/2 ,30);
        setTouchable(Touchable.enabled);
     
        _bBox = new Rectangle(getX(), getY(), getWidth(), getHeight());
@@ -53,7 +54,7 @@ public class PlayerVehicle extends Vehicle
              public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) 
              {
                 setTouched(true);
-                return true;            
+                return false;            
              }
          });
        
