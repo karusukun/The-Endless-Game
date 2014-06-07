@@ -34,78 +34,97 @@ public class GraphAlgorithms {
     }
     
     public boolean wasNodeVisited(Node pNode){
-        if(pNode.getNodesList().isEmpty()){
-            this.generateIntersections(pNode);
-        }
-        
-        for(int trail = 0; trail < _VisitedList.size(); trail++){
-            if(this.isGeneratedBackwards(_VisitedList.get(trail), pNode)){
-                pNode.setVisited(true);
-                return true;
+        try{
+            if(pNode.getNodesList().isEmpty()){
+                this.generateIntersections(pNode);
             }
-        }
-        // si llega aqui significa que no ha sido visitado
-        for(int trail = 0; trail < _VisitedList.size(); trail++){
-            if(this.isGeneratedBackwards( pNode, _VisitedList.get(trail))){
-                _VisitedList.remove(trail); // Lo eliminamos porque ya estamos por encima de el
+            for(int trail = 0; trail < _VisitedList.size(); trail++){
+                if(this.isGeneratedBackwards(_VisitedList.get(trail), pNode)){
+                    pNode.setVisited(true);
+                    return true;
+                }
             }
+            // si llega aqui significa que no ha sido visitado
+            for(int trail = 0; trail < _VisitedList.size(); trail++){
+                if(this.isGeneratedBackwards( pNode, _VisitedList.get(trail))){
+                    _VisitedList.remove(trail); // Lo eliminamos porque ya estamos por encima de el
+                }
+            }
+            // Si llega aqui es porque es un camino nuevo
+            // Osea que el noddo anterior no estaba en la lista, y tampoco este ha sido visitado
+            if(_VisitedList.size() < 30){
+                _VisitedList.add(pNode);
+            }else{
+                Random random = new Random();
+                int randNumber = random.nextInt()%_VisitedList.size();
+                _VisitedList.remove(randNumber);
+                _VisitedList.add(pNode);
+            }
+
+            return false;
+        }catch(Exception e){
+            System.out.println(e.toString());
+            return false;
         }
-        // Si llega aqui es porque es un camino nuevo
-        // Osea que el noddo anterior no estaba en la lista, y tampoco este ha sido visitado
-        
-        if(_VisitedList.size() < 30){
-            _VisitedList.add(pNode);
-        }
-        else{
-            Random random = new Random();
-            int randNumber = random.nextInt()%_VisitedList.size();
-            _VisitedList.remove(randNumber);
-            _VisitedList.add(pNode);
-        }
-        
-        return false;
     }
     
     private boolean isGeneratedBackwards(Node initialNode, Node nodeToFind){
-        Node recorrido = new Node(initialNode.getSeed(),initialNode.getLevel());
-        while(recorrido.getLevel() != nodeToFind.getLevel()){
-            double newSeed = (double)Math.ceil(recorrido.getSeed() / 3);
-            recorrido.setSeed(newSeed);
-            recorrido.setLevel(recorrido.getLevel()-1);
+        try{
+            Node recorrido = new Node(initialNode.getSeed(),initialNode.getLevel());
+            while(recorrido.getLevel() != nodeToFind.getLevel()){
+                double newSeed = (double)Math.ceil(recorrido.getSeed() / 3);
+                recorrido.setSeed(newSeed);
+                recorrido.setLevel(recorrido.getLevel()-1);
+            }
+            if(recorrido.getSeed() == nodeToFind.getSeed()){
+                return true;
+            }
+            return false;
+        }catch(Exception e){
+            System.out.println(e.toString());
+            return false;
         }
-        if(recorrido.getSeed() == nodeToFind.getSeed()){
-            return true;
-        }
-        return false;
     }
     
     private void generateIntersections(Node node){
-        int cantNext = cantNodesSiguientes(node.getSeed());
-        double seedInicial = ((node.getSeed() - 1)*3)+1;
-        for(int numNodo = 0; numNodo < cantNext; numNodo++){
-            Node nuevoNodo = new Node(seedInicial,node.getLevel()+1);
-            node.getNodesList().add(nuevoNodo);
-            seedInicial++;
-        }
-        
-        if(node.getSeed()%5 == 0){ //Esto es que si es multiplo de 5, tiene uno que se devuelve
-            int replacePos = node.getNodesList().size() -1;
-            node.getNodesList().remove(replacePos);
-            node.getNodesList().add(replacePos, generateDevolution(node));
-            
+        try{
+            int cantNext = cantNodesSiguientes(node.getSeed());
+            double seedInicial = ((node.getSeed() - 1)*3)+1;
+            for(int numNodo = 0; numNodo < cantNext; numNodo++){
+                Node nuevoNodo = new Node(seedInicial,node.getLevel()+1);
+                node.getNodesList().add(nuevoNodo);
+                seedInicial++;
+            }
+
+            if(node.getSeed()%5 == 0){ //Esto es que si es multiplo de 5, tiene uno que se devuelve
+                int replacePos = node.getNodesList().size() -1;
+                node.getNodesList().remove(replacePos);
+                node.getNodesList().add(replacePos, generateDevolution(node));
+
+            }
+        }catch(Exception e){
+            System.out.println(e.toString());
         }
         
     }
     
     
     public Node generateDevolution(Node node){
-        
-        double newSeed = node.getSeed();
-        int newLevel = node.getLevel();
-        for(int dev=0; dev< (int)(node.getSeed()%4)+1; dev++){
-            
+        try{
+            double newSeed = node.getSeed();
+            int newLevel = node.getLevel();
+            for(int dev = 0; dev < (int)(node.getSeed()%4)+1; dev++){
+                
+                newSeed = (double)Math.ceil(newSeed / 3);
+                //recorrido.setSeed(newSeed);
+                //recorrido.setLevel(recorrido.getLevel()-1);
+                
+            }
+            return new Node(newSeed,newLevel);
+        }catch(Exception e){
+            System.out.println(e.toString());
+            return null;
         }
-        return new Node(newSeed,newLevel);
     }
     
     

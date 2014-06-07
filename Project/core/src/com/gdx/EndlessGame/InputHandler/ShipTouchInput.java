@@ -18,32 +18,46 @@ public class ShipTouchInput extends InputAdapter {
     
     private VirtualControler controler;
 
-    public ShipTouchInput(VirtualControler controler) {
-        this.controler = controler;
+    public ShipTouchInput(VirtualControler pControler) {
+        this.controler = pControler;
     }
 
     @Override
-    public boolean touchDragged(int screenX, int screenY, int pointer) {
-        
+    public boolean touchDragged(int pScreenX, int pScreenY, int pPointer) {
+        try{
         if(GameplayScreen.getPlayer().isTouched())
         {
             controler.setIsPressed(true);
-            controler.setNewX(screenX);
-            controler.setNewY(screenY);
+            controler.setNewX(pScreenX);
+            controler.setNewY(pScreenY);
         }
         return true;
+        }catch(Exception e){
+            System.out.println(e.toString());
+            return false;
+        }
     }
 
     @Override
-    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-         controler.setFireGun(true);
-         return true;
+    public boolean touchUp(int pScreenX, int pScreenY, int pPointer, int pButton) {
+        try{
+            controler.setFireGun(true);
+            return true;
+        }catch(Exception e){
+            System.out.println(e.toString());
+            return false;
+        }
     }
 
     @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        controler.setFireGun(false);
-        return true;
+    public boolean touchDown(int pScreenX, int pScreenY, int pPointer, int pButton) {
+        try{
+            controler.setFireGun(false);
+            return true;
+         }catch(Exception e){
+            System.out.println(e.toString());
+            return false;
+        }
     }
     
     
